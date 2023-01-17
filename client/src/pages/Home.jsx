@@ -1,3 +1,5 @@
+import { Container } from '@chakra-ui/react'
+
 import React from 'react';
 import Navbar from './Navbar';
 import Hero from './Hero';

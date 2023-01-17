@@ -1,4 +1,5 @@
 import Home from './pages/Home';
+import SendMessages from './components/SendMessages';
 
 function App() {
 
@@ -6,7 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      {account ? <Home /> : <h1>Hello</h1>}
+      {account ? <Home /> : <SendMessages />}
     </div>
   );
 }

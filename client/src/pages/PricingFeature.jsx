@@ -102,16 +102,16 @@ import {
             </Stack>
           </Stack>
           <Divider />
-          <PackageTier title={'Starter'} typePlan="$2.50 - 40 credits" options={options} />
+          <PackageTier title={'Hobby'} typePlan="$2.50 - 40 credits" options={options} />
           <Divider />
           <PackageTier
-            title={'Plus'}
+            title={'Growth'}
             checked={true}
             typePlan="$5 - 100 credits"
             options={options}
           />
           <Divider />
-          <PackageTier title={'Pro'} typePlan="$7.5 - 150 credits" options={options} />
+          <PackageTier title={'Scale'} typePlan="$7.5 - 150 credits" options={options} />
         </Stack>
       </Box>
     );
