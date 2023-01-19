@@ -1,37 +1,28 @@
-import { Stack, HStack, VStack, Box, Heading, Text, Center, Container } from '@chakra-ui/react';
+import { HStack, Heading, Text, Center, Box } from '@chakra-ui/react';
 import { MdCheckCircle } from 'react-icons/md';
 import {
     List,
     ListItem,
     ListIcon,
-    OrderedList,
-    UnorderedList,
 } from '@chakra-ui/react'
 
 import {
     FormControl,
     FormLabel,
     Input,
-    InputGroup,
-    InputRightElement,
     Button,
     Textarea
 } from '@chakra-ui/react';
 
 import { useState } from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import Nav from '../shared/Nav';
-
-function Feature({ title, desc, ...rest }) {
-    return (
-        <Box p={5} shadow='md' borderWidth='1px' {...rest}>
-            <Heading fontSize='xl'>{title}</Heading>
-            <Text mt={4}>{desc}</Text>
-        </Box>
-    )
-}
+import MessageBody from './MessageBody';
+import EmptyMessage from './EmptyMessage';
 
 export default function SendMessages() {
+
+    const [subject, setSubject] = useState("")
+    const [message, setMessage] = useState("")
 
     return (
         <>
@@ -65,7 +56,7 @@ export default function SendMessages() {
                         <Box mt={4}>
                             <FormControl id="sms-subject" isRequired mt={3}>
                                 <FormLabel>SMS Subject</FormLabel>
-                                <Input type="sms-subject" />
+                                <Input type="sms-subject" value={subject} onChange={(e) => setSubject(e.target.value)} />
                             </FormControl>
                             <FormControl id="sms-message" isRequired mt={3}>
                                 <FormLabel>SMS Body</FormLabel>
@@ -76,17 +67,18 @@ export default function SendMessages() {
                                             borderRadius: 'gray.300',
                                         }}
                                         placeholder="message"
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
                                     />
                                 </FormControl>
                             </FormControl>
-                            <div style={{textAlign: "end", marginTop: "2rem"}}>
+                            <div style={{ textAlign: "end", marginTop: "2rem" }}>
                                 <Button colorScheme='blue' >Send Message</Button>
                             </div>
                         </Box>
                     </Box>
                     <Box p={5} shadow='md' borderWidth='1px' >
-                        <Heading fontSize='xl'>Message Showcase</Heading>
-                        <Text mt={4}>here we show the whole message body thats been send to the number</Text>
+                        {subject === '' && message === '' ? <EmptyMessage /> : <MessageBody subject={subject} message={message} />}
                     </Box>
                 </HStack>
             </Center>
