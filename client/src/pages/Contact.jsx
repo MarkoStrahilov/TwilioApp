@@ -26,7 +26,6 @@ import {
   } from 'react-icons/md';
   
   import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
-  import ShareButtons from '../shared/ShareButtons';
   import Navbar from './Navbar';
 
   export default function Contact() {

@@ -1,9 +1,9 @@
+import { Link } from 'react-router-dom'
 import {
   Box,
   Flex,
   Avatar,
   HStack,
-  Link,
   IconButton,
   Button,
   Menu,
@@ -18,10 +18,15 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import Logo from './Logo';
 
-const Links = ['Pricing Plans', 'Api Documentation', 'Contact'];
+const Links = [
+  { id: 1, name: "Pricing Plans", href: "/pricing-plans" },
+  { id: 2, name: "Api Documentation", href: "/docs" },
+  { id: 3, name: "Contact", href: "/contact" },
+]
 
-const NavLink = ({ children }) => (
+const NavLink = ({ id, href, name }) => (
   <Link
+    key={id}
     px={2}
     py={1}
     rounded={'md'}
@@ -29,8 +34,8 @@ const NavLink = ({ children }) => (
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
-    href={'#'}>
-    {children}
+    to={href}>
+    {name}
   </Link>
 );
 
@@ -56,7 +61,7 @@ export default function Nav() {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink id={link.id} name={link.name} href={link.href} />
               ))}
             </HStack>
           </HStack>
@@ -88,7 +93,7 @@ export default function Nav() {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink id={link.id} name={link.name} href={link.href} />
               ))}
             </Stack>
           </Box>

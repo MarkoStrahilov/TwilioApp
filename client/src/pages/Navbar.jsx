@@ -12,7 +12,6 @@ import {
     PopoverTrigger,
     PopoverContent,
     useColorModeValue,
-    useBreakpointValue,
     useDisclosure,
   } from '@chakra-ui/react';
   
@@ -27,6 +26,7 @@ import Logo from '../shared/Logo';
 
 
   export default function Navbar() {
+
     const { isOpen, onToggle } = useDisclosure();
   
     return (

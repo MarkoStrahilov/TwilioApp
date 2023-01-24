@@ -1,14 +1,13 @@
 import React from 'react'
-import { Card, CardBody, CardFooter, Heading, Text, Divider, Button, ButtonGroup, Stack, Image, Center } from '@chakra-ui/react';
-import { TbMessage2 } from 'react-icons/tb'
+import { Card, CardBody, Heading, Text, Divider, Stack, Center } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
 const EmptyMessage = () => {
     return (
         <div>
-            <Card maxW='sm'>
+            <Card maxW='lg'>
                 <CardBody>
                     <Center>
                         <FontAwesomeIcon icon={solid('commenting')} size="6x" bounce  fixedWidth/>
