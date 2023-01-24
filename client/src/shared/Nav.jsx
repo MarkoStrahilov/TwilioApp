@@ -14,8 +14,15 @@ import {
   useColorModeValue,
   Stack,
 } from '@chakra-ui/react';
-import {Link} from 'react-router-dom'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import {Link} from 'react-router-dom'
+
+import AvatarWithRipple from '../shared/AvatarRippleEffect'
 import Logo from './Logo';
 
 const Links = [
@@ -23,17 +30,17 @@ const Links = [
   {id: 2, name: "Api Documentation", href: "/docs"},
   {id: 3, name: "Contact", href: "/contact"},
 ]
-const NavLink = ({ id,name,href}) => (
+const NavLink = ({ id,name,href, effect}) => (
 
   <Link
     key={id}
     px={2}
     py={1}
     rounded={'md'}
-    _hover={{
+   _hover={{
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
+    }} 
     to={href}>
     {name}
   </Link>
@@ -42,6 +49,17 @@ const NavLink = ({ id,name,href}) => (
 
 export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate("")
+
+  const logOut = async() => {
+      try {
+        // await axios.post("/log-out")
+       // navigate("/")
+       toast.success("you have been logged out")
+      } catch (error) {
+        toast.error("something went wrong, please try again later")
+      }
+  }
 
   return (
     <>
@@ -62,7 +80,7 @@ export default function Nav() {
               display={{ base: 'none', md: 'flex' }}>
               {Links.map((link) => (
                 <div key={link.id}>
-                  <NavLink name={link.name} href={link.href}/>
+                  <NavLink name={link.name} href={link.href} />
                 </div>
               ))}
             </HStack>
@@ -81,11 +99,20 @@ export default function Nav() {
                     'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
                   }
                 />
+                {/* <AvatarWithRipple  /> */}
               </MenuButton>
               <MenuList>
+                <MenuItem>Profile</MenuItem>
+                <MenuDivider />
                 <MenuItem>Settings</MenuItem>
                 <MenuDivider />
-                <MenuItem>Log out</MenuItem>
+                <MenuItem
+                  _hover={{
+                  textDecoration: 'none',
+                  bg: useColorModeValue('red.200', 'red.700'),
+                }} 
+                onClick={logOut}
+                >Log out</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

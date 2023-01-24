@@ -1,9 +1,11 @@
 import { Routes,Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home';
 import SendMessages from './components/SendMessages';
 import PricingPlans from './components/PricingPlans';
 import Contact from './pages/Contact'
 import ErrorPage from './components/ErrorPage';
+
 
 function App() {
 
@@ -16,6 +18,7 @@ function App() {
         <Route path='/contact' element={<Contact />}/>
         <Route path='/*' element={<ErrorPage />} />
       </Routes>
+      <ToastContainer />
     </div>
   );
   

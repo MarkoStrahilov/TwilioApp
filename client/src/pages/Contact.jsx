@@ -42,7 +42,7 @@ import {
       try {
           const data = {name,email,message};
           console.log(data)
-          toast.success("message was successfuly send");
+          toast.success("Thanks for contacting us, we will reply as soon as possible");
       } catch (error) {
           toast.error('something went wrong, please try again later');
       }
