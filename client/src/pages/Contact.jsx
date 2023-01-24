@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     Container,
     Flex,
@@ -24,11 +25,29 @@ import {
     MdFacebook,
     MdOutlineEmail,
   } from 'react-icons/md';
+
+  import { toast } from 'react-toastify'
+  import 'react-toastify/dist/ReactToastify.css';
   
   import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
   import Navbar from './Navbar';
 
   export default function Contact() {
+
+    const [name,setName] = useState("");
+    const [email,setEmail] = useState("");
+    const [message,setMessage] = useState("")
+
+    const formSubmit = async() => {
+      try {
+          const data = {name,email,message};
+          console.log(data)
+          toast.success("message was successfuly send");
+      } catch (error) {
+          toast.error('something went wrong, please try again later');
+      }
+  } 
+
     return (
       <>
       <Navbar />
@@ -125,7 +144,7 @@ import {
                               pointerEvents="none"
                               children={<BsPerson color="gray.800" />}
                             />
-                            <Input type="text" size="md" />
+                            <Input type="text" size="md" value={name} onChange={(e) => setName(e.target.value)}/>
                           </InputGroup>
                         </FormControl>
                         <FormControl id="name">
@@ -135,7 +154,7 @@ import {
                               pointerEvents="none"
                               children={<MdOutlineEmail color="gray.800" />}
                             />
-                            <Input type="text" size="md" />
+                            <Input type="text" size="md" value={email} onChange={(e) => setEmail(e.target.value)}/>
                           </InputGroup>
                         </FormControl>
                         <FormControl id="name">
@@ -146,6 +165,8 @@ import {
                               borderRadius: 'gray.300',
                             }}
                             placeholder="message"
+                            value={message} 
+                            onChange={(e) => setMessage(e.target.value)}
                           />
                         </FormControl>
                         <FormControl id="name" float="right">
@@ -153,7 +174,9 @@ import {
                             variant="solid"
                             bg="#0D74FF"
                             color="white"
-                            _hover={{}}>
+                            _hover={{}}
+                            onClick={formSubmit}
+                            >
                             Send Message
                           </Button>
                         </FormControl>

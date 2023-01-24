@@ -14,6 +14,9 @@ import {
     Textarea
 } from '@chakra-ui/react';
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useState } from 'react';
 import Nav from '../shared/Nav';
 import MessageBody from './MessageBody';
@@ -23,6 +26,16 @@ export default function SendMessages() {
 
     const [subject, setSubject] = useState("")
     const [message, setMessage] = useState("")
+
+    const formSubmit = async() => {
+        try {
+            const data = {subject,message};
+            console.log(data)
+            toast.success("message was successfuly send");
+        } catch (error) {
+            toast.error('something went wrong, please try again later');
+        }
+    } 
 
     return (
         <>
@@ -73,7 +86,7 @@ export default function SendMessages() {
                                 </FormControl>
                             </FormControl>
                             <div style={{ textAlign: "end", marginTop: "2rem" }}>
-                                <Button colorScheme='blue' >Send Message</Button>
+                                <Button colorScheme='blue' onClick={formSubmit}>Send Message</Button>
                             </div>
                         </Box>
                     </Box>

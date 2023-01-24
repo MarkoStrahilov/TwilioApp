@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import {
   Box,
   Flex,
@@ -20,21 +19,12 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import Logo from './Logo';
 
 const Links = [
-<<<<<<< Updated upstream
-  { id: 1, name: "Pricing Plans", href: "/pricing-plans" },
-  { id: 2, name: "Api Documentation", href: "/docs" },
-  { id: 3, name: "Contact", href: "/contact" },
-]
-
-const NavLink = ({ id, href, name }) => (
-=======
   {id: 1, name: "Pricing Plans", href: "/pricing-plans"},
   {id: 2, name: "Api Documentation", href: "/docs"},
   {id: 3, name: "Contact", href: "/contact"},
 ]
-
 const NavLink = ({ id,name,href}) => (
->>>>>>> Stashed changes
+
   <Link
     key={id}
     px={2}
@@ -71,13 +61,9 @@ export default function Nav() {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
               {Links.map((link) => (
-<<<<<<< Updated upstream
-                <NavLink id={link.id} name={link.name} href={link.href} />
-=======
                 <div key={link.id}>
                   <NavLink name={link.name} href={link.href}/>
                 </div>
->>>>>>> Stashed changes
               ))}
             </HStack>
           </HStack>
@@ -109,11 +95,7 @@ export default function Nav() {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((link) => (
-<<<<<<< Updated upstream
                 <NavLink id={link.id} name={link.name} href={link.href} />
-=======
-                <NavLink id={link.id} name={link.name} href={link.href}/>
->>>>>>> Stashed changes
               ))}
             </Stack>
           </Box>
