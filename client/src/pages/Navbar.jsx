@@ -7,7 +7,6 @@ import {
     Stack,
     Collapse,
     Icon,
-    Link,
     Popover,
     PopoverTrigger,
     PopoverContent,
@@ -22,6 +21,7 @@ import {
     ChevronRightIcon,
   } from '@chakra-ui/icons';
   
+import {Link} from 'react-router-dom'  
 import Logo from '../shared/Logo';
 
 
@@ -109,7 +109,7 @@ import Logo from '../shared/Logo';
               <PopoverTrigger>
                 <Link
                   p={2}
-                  href={navItem.href ?? '#'}
+                  to={navItem.href ?? '#'}
                   fontSize={'sm'}
                   fontWeight={500}
                   color={linkColor}
@@ -146,7 +146,7 @@ import Logo from '../shared/Logo';
   const DesktopSubNav = ({ label, href, subLabel }) => {
     return (
       <Link
-        href={href}
+        to={href}
         role={'group'}
         display={'block'}
         p={2}
@@ -230,7 +230,7 @@ import Logo from '../shared/Logo';
             align={'start'}>
             {children &&
               children.map((child) => (
-                <Link key={child.label} py={2} href={child.href}>
+                <Link key={child.label} py={2} to={child.href}>
                   {child.label}
                 </Link>
               ))}
@@ -243,37 +243,15 @@ import Logo from '../shared/Logo';
 
   const NAV_ITEMS = [
     {
+      label: 'Pricing Plans',
+      href: '/pricing-plans',
+    },
+    {
       label: 'Api Documentation',
-      href: '#',
+      href: '/docs',
     },
     {
-      label: 'Inspiration',
-      children: [
-        {
-          label: 'Explore Design Work',
-          subLabel: 'Trending Design to inspire you',
-          href: '#',
-        },
-        {
-          label: 'New & Noteworthy',
-          subLabel: 'Up-and-coming Designers',
-          href: '#',
-        },
-      ],
+      label: 'Contact',
+      href: '/contact',
     },
-    {
-      label: 'Find Work',
-      children: [
-        {
-          label: 'Job Board',
-          subLabel: 'Find your dream design job',
-          href: '#',
-        },
-        {
-          label: 'Freelance Projects',
-          subLabel: 'An exclusive list for contract work',
-          href: '#',
-        },
-      ],
-    },
-  ];
+];
