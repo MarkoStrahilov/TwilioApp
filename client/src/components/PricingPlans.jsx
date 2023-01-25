@@ -13,7 +13,9 @@ import {
 } from '@chakra-ui/react';
 import { FaCheckCircle } from 'react-icons/fa';
 
-function PriceWrapper({ children }) {
+import Navbar from '../pages/Navbar'
+
+function PriceWrapper({ children }) { 
   return (
     <Box
       mb={4}
@@ -29,6 +31,8 @@ function PriceWrapper({ children }) {
 
 export default function ThreeTierPricing() {
   return (
+    <>
+    <Navbar />
     <Box py={12}>
       <VStack spacing={2} textAlign="center">
         <Heading as="h1" fontSize="4xl">
@@ -201,5 +205,6 @@ export default function ThreeTierPricing() {
         </PriceWrapper>
       </Stack>
     </Box>
+    </>
   );
 }

@@ -21,6 +21,7 @@ import { useState } from 'react';
 import Nav from '../shared/Nav';
 import MessageBody from './MessageBody';
 import EmptyMessage from './EmptyMessage';
+import TableMessages from './TableMessages';
 
 export default function SendMessages() {
 
@@ -29,9 +30,20 @@ export default function SendMessages() {
 
     const formSubmit = async() => {
         try {
+            
+            if(subject === '' || message === '') {
+                toast.error('make sure to fill out the required fields');
+            } else {
+
             const data = {subject,message};
-            console.log(data)
+            console.log(data);
+
+            setSubject("");
+            setMessage("");
             toast.success("message was successfuly send");
+
+            }
+            
         } catch (error) {
             toast.error('something went wrong, please try again later');
         }
@@ -95,6 +107,7 @@ export default function SendMessages() {
                     </Box>
                 </HStack>
             </Center>
+            <TableMessages />
         </>
     )
 }
