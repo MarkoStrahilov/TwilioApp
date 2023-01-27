@@ -4,13 +4,22 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const cors = require('cors')
 
 const User = require('./models/user')
 const apiRoutes = require('./routes/apiRoutes')
 
 const app = express()
-const port = 3030
+const port = 2000
 
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true
+}
+
+app.use(cors(corsOptions))
+
+mongoose.set("strictQuery", false);
 app.listen(port, () => {
     console.log(`running on port ${port}...`)
 })

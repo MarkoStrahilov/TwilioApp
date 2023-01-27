@@ -10,6 +10,7 @@ module.exports.sendMessage = async(req, res) => {
         return res.status(200).send({
             status: "success",
             message: "endpint was hit",
+            messageData: req.body.data
         })
 
 

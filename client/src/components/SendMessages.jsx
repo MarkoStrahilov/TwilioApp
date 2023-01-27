@@ -14,6 +14,7 @@ import {
     Textarea
 } from '@chakra-ui/react';
 
+import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -36,7 +37,8 @@ export default function SendMessages() {
             } else {
 
             const data = {subject,message};
-            console.log(data);
+           const res = await axios.post('http://localhost:2000/api/v1/create/message',{ data })
+            console.log(res)
 
             setSubject("");
             setMessage("");
