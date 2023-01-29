@@ -10,6 +10,7 @@ const { signIn, signOut } = require('../controllers/signIn')
 const { resetPassword, requestPasswordReset } = require('../controllers/passwordReset')
 const { deleteUser, disableAccount } = require("../controllers/user")
 const { sendMessage } = require("../controllers/messages");
+const {userPlans} = require('../controllers/plans')
 
 // registration / account validation
 router.post('/api/v1/register/user', asyncErrorHandle(register))
@@ -28,6 +29,9 @@ router.delete("/api/v1/delete/user", asyncErrorHandle(deleteUser))
 router.delete("/api/v1/disable/account", asyncErrorHandle(disableAccount))
 
 // messages routes
-router.post('/api/v1/create/message', asyncErrorHandle(sendMessage))
+router.post('/api/v1/send/message', asyncErrorHandle(sendMessage))
+
+// pricing plans routes
+router.post('/api/v1/select/pricing/tier', asyncErrorHandle(userPlans))
 
 module.exports = router

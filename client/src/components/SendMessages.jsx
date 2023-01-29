@@ -37,7 +37,7 @@ export default function SendMessages() {
             } else {
 
             const data = {subject,message};
-           const res = await axios.post('http://localhost:2000/api/v1/create/message',{ data })
+           const res = await axios.post('http://localhost:2000/api/v1/send/message',{ data })
             console.log(res)
 
             setSubject("");

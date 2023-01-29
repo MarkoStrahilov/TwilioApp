@@ -21,6 +21,10 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Message"
     }],
+    planActive: {
+        type: Boolean,
+        default: false
+    },
     plan: {
         type: Schema.Types.ObjectId,
         ref: "Plan"

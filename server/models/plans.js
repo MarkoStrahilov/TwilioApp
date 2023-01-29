@@ -4,13 +4,17 @@ const Schema = mongoose.Schema
 
 const planSchema = new Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
     name: {
         type: String,
         default: "Standard Plan"
+    },
+    price: {
+        type: Number,
+        default: 0,
     },
     credits: {
         type: Number,
