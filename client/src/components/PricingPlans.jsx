@@ -33,9 +33,9 @@ function PriceWrapper({ children }) {
 }
 
 const plans = [
-  {id: 0, name: "Hobby", priceInUSD: 2.50, offer: false},
-  {id: 1, name: "Growth", priceInUSD: 5, offer: true},
-  {id: 2, name: "Scale", priceInUSD: 7.50, offer: false}
+  {id: 0, name: "Hobby", priceInUSD: 2.50, credits: 50, offer: false},
+  {id: 1, name: "Growth", priceInUSD: 5, credits: 100,offer: true},
+  {id: 2, name: "Scale", priceInUSD: 7.50, credits: 150, offer: false}
 ]
 
 export default function ThreeTierPricing() {
@@ -105,7 +105,7 @@ export default function ThreeTierPricing() {
                           {plan.priceInUSD}
                         </Text>
                         <Text fontSize="3xl" color="gray.500">
-                          / 100 credits
+                          / {plan.credits} credits
                         </Text>
                       </HStack>
                     </Box>
