@@ -8,6 +8,7 @@ module.exports.sendMessage = async(req, res) => {
     try {
 
         const foundUser = await User.findOne({ _id: req.query.id }).populate("plan")
+        const foundPlan = await Plan.findOne({ _id: foundUser.plan._id })
 
         if (!foundUser) {
 
@@ -36,10 +37,11 @@ module.exports.sendMessage = async(req, res) => {
 
         }
 
-        if (foundUser.plan.credits <= 0) {
+        if (foundPlan.credits === 0) {
 
-            await User.updateOne(foundUser, { $set: { planActive: false } }, { runValidators: true })
-            await Plan.findOneAndDelete({ _id: foundUser.plan._id })
+            await User.updateOne({ _id: foundUser._id }, { $set: { planActive: false } })
+            await Plan.updateOne(foundPlan, { $set: { status: "not active" } })
+            await User.updateOne(foundUser, { $set: { plan: undefined } })
 
             return res.status(403).send({
                 status: 'fail',
@@ -54,6 +56,17 @@ module.exports.sendMessage = async(req, res) => {
             text: req.body.message,
             createdAt: Date.now()
         })
+
+        if (!foundPlan) {
+
+            return res.status(404).send({
+                status: 'fail',
+                message: "no plan was found, please upgrade your subscription"
+            })
+
+        }
+
+        await Plan.updateOne({ _id: foundPlan._id }, { $inc: { credits: -1 } })
 
         await newMessage.save()
 

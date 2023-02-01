@@ -28,6 +28,7 @@ const userSchema = new Schema({
     plan: {
         type: Schema.Types.ObjectId,
         ref: "Plan",
+        default: undefined
     },
     passwordResetToken: String,
     passwordResetExpires: Date

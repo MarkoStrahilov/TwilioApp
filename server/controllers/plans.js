@@ -6,7 +6,7 @@ module.exports.userPlans = async(req, res) => {
 
     try {
 
-        const foundUser = await User.findOne({ _id: req.query.id })
+        const foundUser = await User.findOne({ _id: req.query.id }).populate("plan")
 
         if (!foundUser) {
 
@@ -39,7 +39,7 @@ module.exports.userPlans = async(req, res) => {
             status: 'active',
             key: randomstring.generate(),
             userId: foundUser._id,
-            name: req.body.name,
+            name: req.query.name,
         })
 
         if (newPlan.name === "Hobby") {
@@ -57,6 +57,13 @@ module.exports.userPlans = async(req, res) => {
             newPlan.priceInUSD = 7.50
             newPlan.credits = 150
 
+        } else {
+
+            return res.status(404).send({
+                status: 'fail',
+                message: "sorry the subscription you are trying to activate does not exist yet"
+            })
+
         }
 
 
@@ -69,7 +76,7 @@ module.exports.userPlans = async(req, res) => {
         return res.status(200).send({
             status: "success",
             message: `pricing plan ${newPlan.name} was unlocked`,
-            data: { foundUser, newPlan }
+            data: { foundUser }
         })
 
     } catch (error) {
