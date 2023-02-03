@@ -66,26 +66,34 @@ import Logo from '../shared/Logo';
             justify={'flex-end'}
             direction={'row'}
             spacing={6}>
+            <Link to={'/sign-in'}>
             <Button
-              as={'a'}
-              fontSize={'sm'}
-              fontWeight={400}
-              variant={'link'}
-              href={'#'}>
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'blue'}
+                bg={'white.400'}
+                _hover={{
+                   bg: 'blue.100',
+                }}
+              >
               Sign In
             </Button>
+            </Link>
+            <Link to={'/sign-up'}>
             <Button
               display={{ base: 'none', md: 'inline-flex' }}
               fontSize={'sm'}
               fontWeight={600}
               color={'white'}
               bg={'blue.400'}
-              href={'#'}
               _hover={{
                 bg: 'blue.300',
-              }}>
+              }}
+              >
               Sign Up
             </Button>
+            </Link>
           </Stack>
         </Flex>
   

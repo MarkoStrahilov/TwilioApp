@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 
 // middlware
-const { asyncErrorHandle } = require('../middleware');
+const { asyncErrorHandle, isLoggedIn } = require('../middleware');
 
 // require functions
 const { register, validateToken } = require('../controllers/register')
 const { signIn, signOut } = require('../controllers/signIn')
 const { resetPassword, requestPasswordReset } = require('../controllers/passwordReset')
-const { deleteUser, disableAccount, fetchUser } = require("../controllers/user")
+const { deleteUser, getCurrentUser, disableAccount, fetchUser } = require("../controllers/user")
 const { sendMessage } = require("../controllers/messages");
 const { userPlans } = require('../controllers/plans')
 
@@ -25,12 +25,13 @@ router.patch('/api/v1/reqest/password/reset', asyncErrorHandle(requestPasswordRe
 router.put('/api/v1/validate/password/reset', asyncErrorHandle(resetPassword))
 
 // user routes
+router.get("/api/v1/current/user", asyncErrorHandle(getCurrentUser))
 router.post("/api/v1/user", asyncErrorHandle(fetchUser))
 router.delete("/api/v1/delete/user", asyncErrorHandle(deleteUser))
 router.delete("/api/v1/disable/account", asyncErrorHandle(disableAccount))
 
 // messages routes
-router.post('/api/v1/send/message', asyncErrorHandle(sendMessage))
+router.post('/api/v1/send/message', isLoggedIn, asyncErrorHandle(sendMessage))
 
 // pricing plans routes
 router.post('/api/v1/select/pricing/tier', asyncErrorHandle(userPlans))

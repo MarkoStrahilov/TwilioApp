@@ -1,5 +1,38 @@
 const User = require('../models/user')
 
+module.exports.getCurrentUser = async(req, res) => {
+
+    try {
+
+        const foundUser = await User.findOne({ _id: req.user.id })
+
+        if (!foundUser) {
+
+            return res.status(404).send({
+                status: 'fail',
+                message: "Can't find user"
+            });
+
+        }
+
+        return res.status(200).send({
+            status: 'success',
+            message: "Fetching user data",
+            data: { user: foundUser }
+        })
+
+
+    } catch (error) {
+
+        return res.status(400).send({
+            status: 'fail',
+            message: error.message,
+        });
+
+    }
+
+}
+
 module.exports.fetchUser = async(req, res) => {
     try {
 
