@@ -32,7 +32,7 @@ import { useNavigate } from 'react-router-dom';
         const res =  await axios.post("http://localhost:2000/api/v1/sign-in/user", data)
         console.log(res)  
         toast.success("successfuly signed in");
-        navigate('/dashboard')
+        // navigate('/dashboard')
       } catch (error) {
           toast.error(error);
       }

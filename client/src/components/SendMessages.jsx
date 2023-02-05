@@ -19,6 +19,8 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useState } from 'react';
+import useFetch from '../hooks/useFetch'
+
 import Nav from '../shared/Nav';
 import MessageBody from './MessageBody';
 import EmptyMessage from './EmptyMessage';
@@ -28,6 +30,23 @@ export default function SendMessages() {
 
     const [subject, setSubject] = useState("")
     const [message, setMessage] = useState("")
+
+    const {data,error,loading} = useFetch("http://localhost:2000/api/v1/current/user",{credentials: 'include'})
+    console.log(data)
+
+    //  if(data?.message === "Cannot read property 'id' of undefined") {
+    //    navigate("/sign-in")
+    //  }
+
+    if(loading) {
+        return (
+            <div>Loading ...</div>
+        )
+    }
+
+    if(error) {
+        console.log(error)
+    }
 
     const formSubmit = async() => {
         try {
