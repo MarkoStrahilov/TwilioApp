@@ -18,7 +18,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import useFetch from '../hooks/useFetch'
 
 import Nav from '../shared/Nav';
@@ -28,15 +28,17 @@ import TableMessages from './TableMessages';
 
 export default function SendMessages() {
 
+
     const [subject, setSubject] = useState("")
     const [message, setMessage] = useState("")
+    const [messages,setMessages] = useState()
 
-    const {data,error,loading} = useFetch("http://localhost:2000/api/v1/current/user",{credentials: 'include'})
-    console.log(data)
+    useEffect(() => {
 
-    //  if(data?.message === "Cannot read property 'id' of undefined") {
-    //    navigate("/sign-in")
-    //  }
+        const {data,error,loading} = useFetch("http://localhost:2000/api/v1/user/?id=63e008d8b80102f28ae3a295",{credentials: 'include', method:"POST"})
+        const user = data?.data?.user[0];
+
+    }, [user])
 
     if(loading) {
         return (
@@ -56,9 +58,10 @@ export default function SendMessages() {
             } else {
 
             const data = {subject,message};
-           const res = await axios.post('http://localhost:2000/api/v1/send/message',{ data })
-            console.log(res)
+           const res = await axios.post(`http://localhost:2000/api/v1/send/message?id=${user._id}`, data)
+           const message = res?.data?.data?.newMessage
 
+            setMessages(...messages,message)
             setSubject("");
             setMessage("");
             toast.success("message was successfuly send");
@@ -66,7 +69,7 @@ export default function SendMessages() {
             }
             
         } catch (error) {
-            toast.error('something went wrong, please try again later');
+            toast.error(error);
         }
     } 
 
@@ -128,7 +131,7 @@ export default function SendMessages() {
                     </Box>
                 </HStack>
             </Center>
-            <TableMessages />
+            <TableMessages messages={messages} setMessages={setMessages}/>
         </>
     )
 }

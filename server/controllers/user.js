@@ -36,7 +36,7 @@ module.exports.getCurrentUser = async(req, res) => {
 module.exports.fetchUser = async(req, res) => {
     try {
 
-        const foundUser = await User.find({ _id: req.query.id }).populate('plan');
+        const foundUser = await User.find({ _id: req.query.id }).populate('plan').populate("messages");
 
         if (!foundUser) {
 

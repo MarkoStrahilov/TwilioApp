@@ -8,19 +8,8 @@ import PricingPlans from './components/PricingPlans';
 import Contact from './pages/Contact'
 import ErrorPage from './components/ErrorPage';
 
-import { useContext } from 'react';
-import { AuthContext } from './hooks/AuthContext';
-
-import { Outlet,useNavigate } from 'react-router-dom';
 
 function App() {
-
-  // const authContext = useContext(AuthContext);
-  // const navigate = useNavigate()
-
-  // if (authContext.isAuthenticated === null) {
-  //  return navigate("/sign-in")
-  // }
 
   return (
     <div className="App">

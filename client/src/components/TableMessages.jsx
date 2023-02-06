@@ -11,7 +11,7 @@ import {
     TableContainer,
   } from '@chakra-ui/react'
 
-  const TableMessages = () => {
+  const TableMessages = ({messages}) => {
 
     return (
         <TableContainer>
@@ -26,18 +26,14 @@ import {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>1324128941249</Td>
+            {messages && messages.map(message => (
+              <Tr>
+              <Td>{message._id}</Td>
               <Td>Success</Td>
-              <Td>Great Love It</Td>
-              <Td>25.01.2022</Td>
+              <Td>{message?.text}</Td>
+              <Td>{message?.createdAt}</Td>
             </Tr>
-            <Tr>
-              <Td>1324128941249</Td>
-              <Td>Failed</Td>
-              <Td>What is that</Td>
-              <Td>25.01.2022</Td>
-            </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>

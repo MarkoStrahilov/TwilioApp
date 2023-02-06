@@ -31,7 +31,7 @@ router.delete("/api/v1/delete/user", asyncErrorHandle(deleteUser))
 router.delete("/api/v1/disable/account", asyncErrorHandle(disableAccount))
 
 // messages routes
-router.post('/api/v1/send/message', isLoggedIn, asyncErrorHandle(sendMessage))
+router.post('/api/v1/send/message', asyncErrorHandle(sendMessage))
 
 // pricing plans routes
 router.post('/api/v1/select/pricing/tier', asyncErrorHandle(userPlans))

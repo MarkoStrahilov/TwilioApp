@@ -11,7 +11,7 @@ const MessageBody = ({subject,message}) => {
   <CardBody>
     <Stack divider={<StackDivider />} spacing='4'>
       <Box>
-        <Heading size='xs' textTransform='uppercase'>
+        <Heading size='xs'>
           {subject === '' ? 'Enter You Subject' : subject}
         </Heading>
         <Text pt='2' fontSize='sm'>
