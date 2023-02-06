@@ -13,6 +13,8 @@ import {
 
   const TableMessages = ({messages}) => {
 
+    console.log(messages)
+
     return (
         <TableContainer>
         <Table variant='striped' colorScheme='gray' marginTop={"5rem"}>
@@ -26,14 +28,14 @@ import {
             </Tr>
           </Thead>
           <Tbody>
-            {messages && messages.map(message => (
-              <Tr>
+             {messages && messages.map(message => (
+              <Tr key={message._id}>
               <Td>{message._id}</Td>
               <Td>Success</Td>
               <Td>{message?.text}</Td>
               <Td>{message?.createdAt}</Td>
             </Tr>
-            ))}
+            ))} 
           </Tbody>
         </Table>
       </TableContainer>

@@ -7,6 +7,7 @@ import SendMessages from './components/SendMessages';
 import PricingPlans from './components/PricingPlans';
 import Contact from './pages/Contact'
 import ErrorPage from './components/ErrorPage';
+import ProtectedRoute from './Route/Route';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
         <Route path='/sign-up' element={<SignUp />}/>
         <Route path='/sign-in' element={<SignIn />}/>
         <Route path='/pricing-plans' element={<PricingPlans />}/> 
-        <Route path='/dashboard' element={<SendMessages />}/>
+        <ProtectedRoute path='/dashboard' element={<SendMessages />}/>
         <Route path='/contact' element={<Contact />}/>
         <Route path='/*' element={<ErrorPage />} />
       </Routes>

@@ -8,7 +8,6 @@ module.exports.sendMessage = async(req, res) => {
     try {
 
         const foundUser = await User.findOne({ _id: req.query.id }).populate("plan")
-        const foundPlan = await Plan.findOne({ _id: foundUser.plan._id })
 
         if (!foundUser) {
 
@@ -36,6 +35,8 @@ module.exports.sendMessage = async(req, res) => {
             })
 
         }
+
+        const foundPlan = await Plan.findOne({ _id: foundUser.plan._id });
 
         if (foundPlan.credits === 0) {
 

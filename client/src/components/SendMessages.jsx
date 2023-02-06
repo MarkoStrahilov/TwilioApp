@@ -28,17 +28,18 @@ import TableMessages from './TableMessages';
 
 export default function SendMessages() {
 
+    const {data,error,loading} = useFetch("http://localhost:2000/api/v1/user/?id=63e1335dc503e20d71c499a3",{credentials: 'include', method:"POST"})
+    const user = data?.data?.user[0];
 
     const [subject, setSubject] = useState("")
     const [message, setMessage] = useState("")
-    const [messages,setMessages] = useState()
+    const [messages,setMessages] = useState([])
 
     useEffect(() => {
 
-        const {data,error,loading} = useFetch("http://localhost:2000/api/v1/user/?id=63e008d8b80102f28ae3a295",{credentials: 'include', method:"POST"})
-        const user = data?.data?.user[0];
+        setMessages(user?.messages)
 
-    }, [user])
+    }, [user,messages])
 
     if(loading) {
         return (
@@ -57,11 +58,11 @@ export default function SendMessages() {
                 toast.error('make sure to fill out the required fields');
             } else {
 
+            setMessages([message, ...messages])
+            
             const data = {subject,message};
-           const res = await axios.post(`http://localhost:2000/api/v1/send/message?id=${user._id}`, data)
-           const message = res?.data?.data?.newMessage
+            await axios.post(`http://localhost:2000/api/v1/send/message?id=${user._id}`, data)
 
-            setMessages(...messages,message)
             setSubject("");
             setMessage("");
             toast.success("message was successfuly send");
@@ -131,7 +132,7 @@ export default function SendMessages() {
                     </Box>
                 </HStack>
             </Center>
-            <TableMessages messages={messages} setMessages={setMessages}/>
+            <TableMessages messages={messages}/>
         </>
     )
 }
