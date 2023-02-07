@@ -18,37 +18,34 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 const corsOptions = {
-  origin: "http://localhost:3000",
-  credentials: true,
+    origin: "http://localhost:3000",
+    credentials: true,
 };
 
 app.use(cors(corsOptions));
 
 mongoose.set("strictQuery", false);
+
 app.listen(port, () => {
-  console.log(`running on port ${port}...`);
+    console.log(`running on port ${port}...`);
 });
 
-mongoose
-  .connect("mongodb+srv://admin:twilioapp@cluster0.p1otcab.mongodb.net/test", {
-    useNewUrlParser: true,
-  })
-  .then(() => {
-    console.log("database connected");
-  })
-  .catch((err) => {
-    console.log("mongoose error connection", err);
-  });
+mongoose.connect('mongodb://localhost:27017/sms', { useNewUrlParser: true, })
+    .then(() => {
+        console.log('database connected')
+    }).catch(err => {
+        console.log('mongoose error connection', err)
+    })
 
 const sessionOptions = {
-  secret: "thisisnotagoodsecrettohave",
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-  },
+    secret: "thisisnotagoodsecrettohave",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
 };
 
 app.use(session(sessionOptions));
@@ -60,8 +57,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
+    res.locals.currentUser = req.user;
+    next();
 });
 
 app.use("/", apiRoutes);
