@@ -13,8 +13,6 @@ import {
 
   const TableMessages = ({messages}) => {
 
-    console.log(messages)
-
     return (
         <TableContainer>
         <Table variant='striped' colorScheme='gray' marginTop={"5rem"}>

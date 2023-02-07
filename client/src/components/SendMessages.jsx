@@ -24,6 +24,7 @@ import TableMessages from "./TableMessages";
 import { useNavigate } from "react-router-dom";
 
 export default function SendMessages() {
+  const [user,setUser] = useState({})
   const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
@@ -35,6 +36,8 @@ export default function SendMessages() {
       .get("/api/v1/current/user")
       .then((res) => {
         setLoader(false);
+        setUser(res?.data?.data?.user);
+        setMessages(res?.data?.data?.user?.messages)
       })
       .catch((error) => {
         navigate("/sign-in");
@@ -42,37 +45,24 @@ export default function SendMessages() {
       });
   }, []);
 
-  const { data, error, loading } = useFetch(
-    "/api/v1/user/?id=63e1335dc503e20d71c499a3",
-    { credentials: "include", method: "POST" }
-  );
-  const user = data?.data?.user[0];
 
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    setMessages(user?.messages);
-  }, [user, messages]);
-
-  if (loading) {
-    return <div>Loading ...</div>;
-  }
-
-  if (error) {
-    console.log(error);
-  }
+console.log(user)
 
   const formSubmit = async () => {
     try {
       if (subject === "" || message === "") {
+
         toast.error("make sure to fill out the required fields");
+        
       } else {
         setMessages([message, ...messages]);
 
         const data = { subject, message };
-        await axios.post(`/api/v1/send/message?id=${user._id}`, data);
+       await axios.post(`/api/v1/send/message?id=${user._id}`, data);
 
         setSubject("");
         setMessage("");
@@ -91,7 +81,7 @@ export default function SendMessages() {
         <>
           <Nav />
           <Heading as="h3" size="lg" textAlign={"center"}>
-            Send text messages with our provider
+            Howdy {user.username} Send text messages with our provider
           </Heading>
           <List spacing={3}>
             <ListItem>
