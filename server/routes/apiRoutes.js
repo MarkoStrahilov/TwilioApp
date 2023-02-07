@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 
 // middlware
-const { asyncErrorHandle, isLoggedIn } = require('../middleware');
+const { asyncErrorHandle, isLoggedIn, isAuthenticatedUser } = require('../middleware');
 
 // require functions
 const { register, validateToken } = require('../controllers/register')

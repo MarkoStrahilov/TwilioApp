@@ -53,8 +53,8 @@ export default function Nav() {
 
   const logOut = async() => {
       try {
-        // await axios.post("/log-out")
-       // navigate("/")
+        await axios.post("/log-out");
+       navigate("/")
        toast.success("you have been logged out")
       } catch (error) {
         toast.error("something went wrong, please try again later")

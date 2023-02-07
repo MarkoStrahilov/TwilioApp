@@ -30,7 +30,7 @@ import {
       try {
           const data = {username,email,password};
           console.log(data)
-         const res = await axios.post("http://localhost:2000/api/v1/register/user", data)
+         const res = await axios.post("/api/v1/register/user", data)
          console.log(res)
          toast.success("welcome new user");
       } catch (error) {

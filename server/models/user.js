@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const passportLocalMongoose = require('passport-local-mongoose')
 const bcrypt = require('bcrypt')
-
+const jwt = require("jsonwebtoken")
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -46,6 +46,14 @@ userSchema.methods.createPasswordResetToken = async function() {
 
     return otp
 }
+
+// jwt token for cookie
+userSchema.methods.getJwtToken = function () {
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY || "urkjrsdiowqeol3489dfh&^&vh", {
+      expiresIn: process.env.JWT_EXPIRES || "7d",
+    });
+  };
+
 
 const User = mongoose.model('User', userSchema)
 module.exports = User
