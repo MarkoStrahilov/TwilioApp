@@ -34,6 +34,6 @@ router.delete("/api/v1/disable/account", asyncErrorHandle(disableAccount))
 router.post('/api/v1/send/message', asyncErrorHandle(sendMessage))
 
 // pricing plans routes
-router.post('/api/v1/select/pricing/tier', asyncErrorHandle(userPlans))
+router.post('/api/v1/select/pricing/tier', isLoggedIn, asyncErrorHandle(userPlans))
 
 module.exports = router

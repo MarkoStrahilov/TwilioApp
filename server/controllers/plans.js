@@ -6,7 +6,7 @@ module.exports.userPlans = async(req, res) => {
 
     try {
 
-        const foundUser = await User.findOne({ _id: req.query.id }).populate("plan")
+        const foundUser = await User.findOne({ _id: req.user.id }).populate("plan")
 
         if (!foundUser) {
 

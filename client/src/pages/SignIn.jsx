@@ -28,11 +28,11 @@ export default function SignIn() {
   const formSubmit = async () => {
     try {
       const data = { username, password };
-      const res = await axios.post("/api/v1/sign-in/user", data);
+      await axios.post("/api/v1/sign-in/user", data);
       toast.success("successfuly signed in");
       navigate("/dashboard");
     } catch (error) {
-      toast.error(error);
+      toast.error(error.response.data.message)
     }
   };
 

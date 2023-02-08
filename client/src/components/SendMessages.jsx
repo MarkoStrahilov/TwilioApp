@@ -50,7 +50,6 @@ export default function SendMessages() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-console.log(user)
 
   const formSubmit = async () => {
     try {
@@ -69,9 +68,13 @@ console.log(user)
         toast.success("message was successfuly send");
       }
     } catch (error) {
-      toast.error(error);
+      toast.error(error.response.data.message);
     }
   };
+
+  if(!user) {
+    return navigate("/")
+  }
 
   return (
     <>
@@ -81,7 +84,7 @@ console.log(user)
         <>
           <Nav />
           <Heading as="h3" size="lg" textAlign={"center"}>
-            Howdy {user.username} Send text messages with our provider
+         Howdy {user.username} Send text messages with our provider
           </Heading>
           <List spacing={3}>
             <ListItem>

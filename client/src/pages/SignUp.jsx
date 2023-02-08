@@ -29,12 +29,11 @@ import {
     const formSubmit = async() => {
       try {
           const data = {username,email,password};
-          console.log(data)
-         const res = await axios.post("/api/v1/register/user", data)
-         console.log(res)
+        const res = await axios.post("/api/v1/register/user", data);
+        console.log(res.data)
          toast.success("welcome new user");
       } catch (error) {
-          toast.error(error.message);
+          toast.error(error.response.data.message);
       }
   } 
 

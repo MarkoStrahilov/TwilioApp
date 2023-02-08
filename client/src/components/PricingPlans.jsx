@@ -44,10 +44,10 @@ export default function ThreeTierPricing() {
 
     try {
       const selectedPlan = plans[id]
-      const res = await axios.post('http://localhost:2000/api/v1/select/pricing/tier',{ selectedPlan })
-      console.log(res)
+      const res = await axios.post(`/api/v1/select/pricing/tier?name=${selectedPlan.name}`,selectedPlan)
+      toast.success(res.data.message)
     } catch (error) {
-      toast.error('something went wrong, please try again later');
+      toast.error(error.response.data.message);
     }
 
   }

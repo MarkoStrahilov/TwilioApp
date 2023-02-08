@@ -6,9 +6,9 @@ module.exports.getCurrentUser = async(req, res) => {
         const { token } = req.cookies;
 
         if (!token) {
-            res.status(401).json({
-                success: false,
-                message: "please log in",
+            return res.status(401).send({
+                status: "fail",
+                message: "Unauthorized, please sign in or register a new account",
             });
         } else {
             const decodedData = jwt.verify(
@@ -33,6 +33,7 @@ module.exports.getCurrentUser = async(req, res) => {
 };
 
 module.exports.fetchUser = async(req, res) => {
+
     try {
         const foundUser = await User.find({ _id: req.query.id })
             .populate("plan")
@@ -50,6 +51,7 @@ module.exports.fetchUser = async(req, res) => {
             message: "Fetching user data",
             data: { user: foundUser },
         });
+
     } catch (error) {
         return res.status(400).send({
             status: "fail",

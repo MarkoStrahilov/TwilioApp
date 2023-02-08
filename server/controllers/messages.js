@@ -40,7 +40,7 @@ module.exports.sendMessage = async(req, res) => {
 
         if (foundPlan.credits === 0) {
 
-            await User.updateOne({ _id: foundUser._id }, { $set: { planActive: false } })
+            await User.updateOne(foundUser, { $set: { planActive: false } })
             await Plan.updateOne(foundPlan, { $set: { status: "not active" } })
             await User.updateOne(foundUser, { $set: { plan: undefined } })
 

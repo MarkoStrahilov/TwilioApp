@@ -4,39 +4,40 @@ const sendToken = require("../utils/sendToken");
 
 module.exports.signIn = async(req, res, next) => {
     try {
-        passport.authenticate(
-            "local", { failureRedirect: "http://localhost:3000/sign-in" },
-            async(err, user) => {
-                if (err) throw err;
+        passport.authenticate("local", { failureRedirect: "http://localhost:3000/sign-in" }, async(err, user) => {
 
-                if (!user) {
-                    return res.status(404).send({
-                        status: "fail",
-                        message: "User doesn't exist or invalid log in data",
-                    });
-                }
+            if (err) throw err;
 
-                req.login(user, err, async function() {
-                    if (err) throw err;
-
-                    const foundUser = await User.findOne({ _id: req.user.id });
-
-                    if (foundUser.isVerified === false) {
-                        return res.status(403).send({
-                            status: "fail",
-                            message: "Unable to sign in to your account. Account is not verified, please verify your account in order to use our service",
-                        });
-                    } else {
-                        sendToken(foundUser, 201, res);
-                    }
+            if (!user) {
+                return res.status(404).send({
+                    status: "fail",
+                    message: "User doesn't exist or invalid log in data",
                 });
             }
-        )(req, res, next);
+
+            req.login(user, err, async function() {
+                if (err) throw err;
+
+                const foundUser = await User.findOne({ _id: req.user.id });
+
+                if (foundUser.isVerified === false) {
+                    return res.status(403).send({
+                        status: "fail",
+                        message: "Account is not verified, please verify your account in order to use our service",
+                    });
+                } else {
+                    sendToken(foundUser, 201, res);
+                }
+            });
+        })(req, res, next);
+
     } catch (error) {
+
         return res.status(400).send({
             status: "fail",
             message: error.message,
         });
+
     }
 };
 
