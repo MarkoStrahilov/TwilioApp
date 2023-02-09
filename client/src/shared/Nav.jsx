@@ -102,7 +102,9 @@ export default function Nav() {
                 {/* <AvatarWithRipple  /> */}
               </MenuButton>
               <MenuList>
-                <MenuItem>Settings</MenuItem>
+              <Link to={"/dashboard"}><MenuItem>Dashboard</MenuItem></Link>
+              <MenuDivider />
+                <Link to={"/settings"}><MenuItem>Settings</MenuItem></Link>
                 <MenuDivider />
                 <MenuItem
                   _hover={{

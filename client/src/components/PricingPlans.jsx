@@ -11,10 +11,14 @@ import {
   ListIcon,
   Button,
 } from '@chakra-ui/react';
+
+import { useEffect,useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import Navbar from '../pages/Navbar'
-
+import Nav from '../shared/Nav';
+import useAuth from '../hooks/useAuth';
 import axios from 'axios'
+
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -40,6 +44,26 @@ const plans = [
 
 export default function ThreeTierPricing() {
 
+  const [user,setUser] = useState({})
+  const [loader, setLoader] = useState(false);
+
+  useEffect(() => {
+    setLoader(true);
+    axios
+      .get("/api/v1/current/user")
+      .then((res) => {
+        setLoader(false);
+        setUser(res?.data?.data?.user);
+      })
+      .catch((error) => {
+        setLoader(false);
+      });
+  }, []);
+
+  if(loader) {
+    return <h1>Loading</h1>
+  }
+
   const handlePlanChange = async(id) => {
 
     try {
@@ -54,7 +78,7 @@ export default function ThreeTierPricing() {
 
   return (
     <>
-    <Navbar />
+    <Nav />
     <Box py={12}>
       <VStack spacing={2} textAlign="center">
         <Heading as="h1" fontSize="4xl">

@@ -29,7 +29,7 @@ export default function SendMessages() {
   
   const navigate = useNavigate();
 
-  const [messages,setMessages] = useState()
+  const [messages,setMessages] = useState([])
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
@@ -69,9 +69,12 @@ export default function SendMessages() {
     }
   };
 
-  // if(!user) {
-  //   return navigate("/")
-  // }
+  if(!user) {
+    toast.error("something went wrong please try again");
+    return navigate("/")
+  }
+
+  console.log(messages)
 
   return (
     <>
@@ -83,24 +86,6 @@ export default function SendMessages() {
           <Heading as="h3" size="lg" textAlign={"center"}>
          Howdy {user.username} Send text messages with our provider
           </Heading>
-          <List spacing={3}>
-            <ListItem>
-              <ListIcon as={MdCheckCircle} color="green.500" />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit
-            </ListItem>
-            <ListItem>
-              <ListIcon as={MdCheckCircle} color="green.500" />
-              Assumenda, quia temporibus eveniet a libero incidunt suscipit
-            </ListItem>
-            <ListItem>
-              <ListIcon as={MdCheckCircle} color="green.500" />
-              Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-            </ListItem>
-            <ListItem>
-              <ListIcon as={MdCheckCircle} color="green.500" />
-              Quidem, ipsam illum quis sed voluptatum quae eum fugit earum
-            </ListItem>
-          </List>
           <Center>
             <HStack spacing={8} mt={"2rem"}>
               <Box p={5} shadow="md" borderWidth="1px">
@@ -147,7 +132,7 @@ export default function SendMessages() {
               </Box>
             </HStack>
           </Center>
-          <TableMessages messages={messages} />
+          {messages.length !== 0 ? <TableMessages messages={messages} /> : null}
         </>
       )}
     </>

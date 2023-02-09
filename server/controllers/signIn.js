@@ -11,7 +11,7 @@ module.exports.signIn = async(req, res, next) => {
             if (!user) {
                 return res.status(404).send({
                     status: "fail",
-                    message: "User doesn't exist or invalid log in data",
+                    message: "user doesn't exist or invalid log in data",
                 });
             }
 
@@ -20,11 +20,22 @@ module.exports.signIn = async(req, res, next) => {
 
                 const foundUser = await User.findOne({ _id: req.user.id });
 
-                if (foundUser.isVerified === false) {
+                if (foundUser.isDisabled === true) {
+
                     return res.status(403).send({
                         status: "fail",
-                        message: "Account is not verified, please verify your account in order to use our service",
+                        message: "account is disabled, please contact support",
                     });
+
+                }
+
+                if (foundUser.isVerified === false) {
+
+                    return res.status(403).send({
+                        status: "fail",
+                        message: "account is not verified, please verify your account in order to use our service",
+                    });
+
                 } else {
                     sendToken(foundUser, 201, res);
                 }
