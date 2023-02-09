@@ -11,6 +11,7 @@ import {
     useColorModeValue,
   } from '@chakra-ui/react';
   import { FaCheckCircle } from 'react-icons/fa';
+  import {Link} from 'react-router-dom'
   
   const options = [
     { id: 1, desc: '1 lorem ipsum' },
@@ -54,12 +55,14 @@ import {
         </List>
         <Heading size={'xl'}>{typePlan}</Heading>
         <Stack>
+        <Link to={"/pricing-plans"}>
           <Button
             size="md"
             color={useColorModeValue(colorTextLight, colorTextDark)}
             bgColor={useColorModeValue(bgColorLight, bgColorDark)}>
             Get Started
           </Button>
+        </Link>
         </Stack>
       </Stack>
     );

@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import SendMessages from "./components/SendMessages";
 import PricingPlans from "./components/PricingPlans";
 import Contact from "./pages/Contact";
+import Settings from "./pages/Settings"
 import ErrorPage from "./components/ErrorPage";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/pricing-plans" element={<PricingPlans />} />
         <Route path="/dashboard" element={<SendMessages />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
       <ToastContainer />

@@ -22,7 +22,6 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import {Link} from 'react-router-dom'
 
-import AvatarWithRipple from '../shared/AvatarRippleEffect'
 import Logo from './Logo';
 
 const Links = [
@@ -103,8 +102,6 @@ export default function Nav() {
                 {/* <AvatarWithRipple  /> */}
               </MenuButton>
               <MenuList>
-                <MenuItem>Profile</MenuItem>
-                <MenuDivider />
                 <MenuItem>Settings</MenuItem>
                 <MenuDivider />
                 <MenuItem

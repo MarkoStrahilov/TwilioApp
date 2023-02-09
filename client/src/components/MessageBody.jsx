@@ -7,7 +7,6 @@ const MessageBody = ({subject,message}) => {
   <CardHeader>
     <Heading size='md'>Message Body</Heading>
   </CardHeader>
-
   <CardBody>
     <Stack divider={<StackDivider />} spacing='4'>
       <Box>

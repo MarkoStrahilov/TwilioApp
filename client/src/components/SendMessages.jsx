@@ -14,42 +14,39 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useState, useEffect } from "react";
-import useFetch from "../hooks/useFetch";
+import { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Nav from "../shared/Nav";
 import MessageBody from "./MessageBody";
 import EmptyMessage from "./EmptyMessage";
 import TableMessages from "./TableMessages";
-import { useNavigate } from "react-router-dom";
 
 export default function SendMessages() {
+
   const [user,setUser] = useState({})
   const [loader, setLoader] = useState(false);
-
+  
   const navigate = useNavigate();
 
-  // protected Route
-  useEffect(() => {
-    setLoader(true);
-    axios
-      .get("/api/v1/current/user")
-      .then((res) => {
-        setLoader(false);
-        setUser(res?.data?.data?.user);
-        setMessages(res?.data?.data?.user?.messages)
-      })
-      .catch((error) => {
-        navigate("/sign-in");
-        setLoader(false);
-      });
-  }, []);
-
-
+  const [messages,setMessages] = useState()
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
 
+  useEffect(() => {
+      setLoader(true);
+      axios
+        .get("/api/v1/current/user")
+        .then((res) => {
+          setLoader(false);
+          setUser(res?.data?.data?.user);
+          setMessages(res?.data?.data?.user?.messages)
+        })
+        .catch((error) => {
+          navigate("/sign-in");
+          setLoader(false);
+        });
+    }, []);
 
   const formSubmit = async () => {
     try {
@@ -58,7 +55,7 @@ export default function SendMessages() {
         toast.error("make sure to fill out the required fields");
         
       } else {
-        setMessages([message, ...messages]);
+         setMessages([message, ...messages]);
 
         const data = { subject, message };
        await axios.post(`/api/v1/send/message?id=${user._id}`, data);
@@ -72,9 +69,9 @@ export default function SendMessages() {
     }
   };
 
-  if(!user) {
-    return navigate("/")
-  }
+  // if(!user) {
+  //   return navigate("/")
+  // }
 
   return (
     <>

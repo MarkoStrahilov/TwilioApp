@@ -52,6 +52,7 @@ module.exports.sendMessage = async(req, res) => {
         }
 
         const newMessage = new Message({
+            status: "success",
             userId: foundUser._id,
             heading: req.body.subject,
             text: req.body.message,

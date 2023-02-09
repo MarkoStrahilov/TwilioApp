@@ -29,7 +29,7 @@ import {
              {messages && messages.map(message => (
               <Tr key={message._id}>
               <Td>{message._id}</Td>
-              <Td>Success</Td>
+              <Td color={'green.600'}>{message.status}</Td>
               <Td>{message?.text}</Td>
               <Td>{message?.createdAt}</Td>
             </Tr>
