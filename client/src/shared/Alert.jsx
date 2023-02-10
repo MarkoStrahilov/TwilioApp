@@ -9,7 +9,7 @@ import {
     useDisclosure
   } from '@chakra-ui/react'
 
- export default function Alerts() {
+ export default function Alerts({message}) {
     const {
       isOpen: isVisible,
       onOpen,
@@ -21,8 +21,7 @@ import {
         <Box>
           <AlertTitle>API KEY</AlertTitle>
           <AlertDescription>
-            Your application has been received. We will review your application
-            and respond within the next 48 hours.
+            {message}
           </AlertDescription>
         </Box>
       </Alert>
