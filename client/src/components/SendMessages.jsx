@@ -32,6 +32,7 @@ export default function SendMessages() {
   const [messages,setMessages] = useState([])
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [phone,setPhone] = useState("")
 
   useEffect(() => {
       setLoader(true);
@@ -57,7 +58,7 @@ export default function SendMessages() {
       } else {
          setMessages([message, ...messages]);
 
-        const data = { subject, message };
+        const data = { subject, phone, message };
        await axios.post(`/api/v1/send/message?id=${user._id}`, data);
 
         setSubject("");
@@ -74,8 +75,6 @@ export default function SendMessages() {
     return navigate("/")
   }
 
-  console.log(messages)
-
   return (
     <>
       {loader ? (
@@ -91,7 +90,7 @@ export default function SendMessages() {
               <Box p={5} shadow="md" borderWidth="1px">
                 <Heading fontSize="xl">Create Your Message</Heading>
                 <Text mt={4}>
-                  here we show inputs that help create the message
+                  Here we show inputs that help create your custom message
                 </Text>
                 <Box mt={4}>
                   <FormControl id="sms-subject" isRequired mt={3}>
@@ -100,6 +99,14 @@ export default function SendMessages() {
                       type="sms-subject"
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
+                    />
+                  </FormControl>
+                  <FormControl id="sms-phone" isRequired mt={3}>
+                    <FormLabel>Enter Number</FormLabel>
+                    <Input
+                      type="sms-phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                     />
                   </FormControl>
                   <FormControl id="sms-message" isRequired mt={3}>
