@@ -60,6 +60,29 @@ module.exports.fetchUser = async(req, res) => {
     }
 };
 
+module.exports.updatePassword = async(req,res) => {
+
+    try {
+
+        const {oldPassword, newPassword, retypeNewPassword} = req.body
+        
+        return res.status(200).send({
+            status: "success",
+            message: "Fetching user data",
+            data: req.body,
+        });
+
+    } catch (error) {
+        
+        return res.status(400).send({
+            status: "fail",
+            message: error.message,
+        });
+
+    }
+
+}
+
 module.exports.deleteUser = async(req, res) => {
     try {
         const foundUser = await User.findOne({ _id: req.query.id });

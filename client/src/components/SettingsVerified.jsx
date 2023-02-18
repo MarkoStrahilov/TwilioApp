@@ -1,6 +1,10 @@
 import { React, useState } from 'react'
 import Alerts from '../shared/Alert'
-import NewPassword from '../components/NewPassword'
+import Indicator from '../components/Indicator'
+import SubscriptionReport from './SubscriptionReport'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Flex,
   Box,
@@ -8,8 +12,6 @@ import {
   FormLabel,
   Input,
   HStack,
-  InputRightElement,
-  Stack,
   Button,
   Heading,
   Text,
@@ -19,8 +21,26 @@ import {
 
 const SettingsVerified = ({ user }) => {
 
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [retypeNewPassword, setRetypeNewPassword] = useState("");
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
+
+  const handlePasswordChange = async () => {
+    try {
+      if (oldPassword === '' || newPassword === '' || retypeNewPassword === '') {
+        toast.error("make sure to fill out the required fields");
+      } else {
+        const data = { oldPassword, newPassword, retypeNewPassword }
+        const res = await axios.put("/api/v1/update/password", data);
+        toast.success("password was successfuly updated")
+        console.log(res)
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  }
 
   const styles = {
     margin: "0 0 3rem 0"
@@ -28,14 +48,6 @@ const SettingsVerified = ({ user }) => {
 
   const centerStyles = {
     textAlign: "center"
-  }
-
-  const breakpoints = {
-    sm: '30em',
-    md: '48em',
-    lg: '62em',
-    xl: '80em',
-    '2xl': '96em',
   }
 
   return (
@@ -73,22 +85,27 @@ const SettingsVerified = ({ user }) => {
           </FormControl>
         </Box>
       </HStack>
-      <Box margin={"0 0 2rem 0"}>
-          <Heading margin={"2rem 0"}>Subscription</Heading>
+      <Divider />
+      <Box margin={"2rem 0"}>
         <Flex>
-          <Box p='4' flex='2' border={"1px solid black"}>
-            Box 1
+          <Box p='4' flex='2'>
+            <Text fontSize='3xl' color={'gray.600'} margin={"0 0 2rem 0"} >
+              Subscription Status
+            </Text>
+            <Text fontSize='sm' color={'gray.600'}>
+              Subscribe to receive status update via email for Twilio services. We'll email you the details when the service is experiencing any problems on our end.
+            </Text>
           </Box>
           <Spacer />
-          <Box p='4' flex='2' border={"1px solid black"}>
-            Box 2
+          <Box p='4' flex='2'>
+             <SubscriptionReport plan={user.plan}/>
           </Box>
         </Flex>
       </Box>
       <Divider />
       <Flex>
         <Box p='4' flex='2'>
-          <Text fontSize='3xl' color={'gray.600'} margin={" 0 0 2rem 0"} >
+          <Text fontSize='3xl' color={'gray.600'} margin={"2rem 0"} >
             Change and update your password
           </Text>
         </Box>
@@ -97,18 +114,18 @@ const SettingsVerified = ({ user }) => {
           <Box>
             <FormControl id="firstName" margin={"0 0 1rem 0"}>
               <FormLabel>Old Password</FormLabel>
-              <Input type="text" size='md' value={user.username} />
+              <Input type="text" size='md' value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
             </FormControl>
             <FormControl id="firstName" margin={"1rem 0"}>
               <FormLabel>New Password</FormLabel>
-              <Input type="text" size='md' value={user.username} />
+              <Input type="text" size='md' value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
             </FormControl>
             <FormControl id="firstName" margin={"1rem 0"}>
               <FormLabel>Retype New Password</FormLabel>
-              <Input type="text" size='md' value={user.username} />
+              <Input type="text" size='md' value={retypeNewPassword} onChange={(e) => setRetypeNewPassword(e.target.value)} />
             </FormControl>
             <div style={{ textAlign: "end", marginTop: "2rem" }}>
-              <Button variant="solid" bg="#0D74FF" color="white" hover={{}}>
+              <Button variant="solid" bg="#0D74FF" color="white" hover={{}} onClick={handlePasswordChange}>
                 Update Password
               </Button>
             </div>
