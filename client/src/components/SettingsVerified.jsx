@@ -98,7 +98,7 @@ const SettingsVerified = ({ user }) => {
           </Box>
           <Spacer />
           <Box p='4' flex='2'>
-             <SubscriptionReport plan={user.plan}/>
+             <SubscriptionReport plan={user.plan} credits={user.credits}/>
           </Box>
         </Flex>
       </Box>
@@ -125,7 +125,7 @@ const SettingsVerified = ({ user }) => {
               <Input type="text" size='md' value={retypeNewPassword} onChange={(e) => setRetypeNewPassword(e.target.value)} />
             </FormControl>
             <div style={{ textAlign: "end", marginTop: "2rem" }}>
-              <Button variant="solid" bg="#0D74FF" color="white" hover={{}} onClick={handlePasswordChange}>
+              <Button colorScheme="blue" onClick={handlePasswordChange}>
                 Update Password
               </Button>
             </div>

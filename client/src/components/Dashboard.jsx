@@ -8,60 +8,71 @@ import {
   Input,
   Button,
   Textarea,
+  LinkBox,
+  LinkOverlay
 } from "@chakra-ui/react";
 
+import { COUNTRIES } from '../hooks/Countries'
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Nav from "../shared/Nav";
 import MessageBody from "./MessageBody";
 import EmptyMessage from "./EmptyMessage";
 import TableMessages from "./TableMessages";
+import PhoneNumberInput from "./PhoneNumberInput";
 
 export default function SendMessages() {
 
-  const [user,setUser] = useState({})
+
+  const [user, setUser] = useState({})
   const [loader, setLoader] = useState(false);
-  
+
   const navigate = useNavigate();
 
-  const [messages,setMessages] = useState([])
+  const [messages, setMessages] = useState([])
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const [phone,setPhone] = useState("")
+  const [phone, setPhone] = useState("")
 
   useEffect(() => {
-      setLoader(true);
-      axios
-        .get("/api/v1/current/user")
-        .then((res) => {
-          setLoader(false);
-          setUser(res?.data?.data?.user);
-          setMessages(res?.data?.data?.user?.messages)
-        })
-        .catch((error) => {
-          navigate("/sign-in");
-          setLoader(false);
-        });
-    }, []);
+    setLoader(true);
+    axios
+      .get("/api/v1/current/user")
+      .then((res) => {
+        setLoader(false);
+        setUser(res?.data?.data?.user);
+        setMessages(res?.data?.data?.user?.messages)
+      })
+      .catch((error) => {
+        navigate("/sign-in");
+        setLoader(false);
+      });
+  }, []);
+
+  const countryOptions = COUNTRIES.map(({ name, iso }) => ({
+    label: name,
+    value: iso
+  }));
 
   const formSubmit = async () => {
     try {
-      if (subject === "" || message === "") {
+      if (subject === "" || message === "" || phone === "") {
 
         toast.error("make sure to fill out the required fields");
-        
+
       } else {
-         setMessages([message, ...messages]);
+        setMessages([message, ...messages]);
 
         const data = { subject, phone, message };
-       await axios.post(`/api/v1/send/message?id=${user._id}`, data);
-
+        const res = await axios.post(`/api/v1/send/message?id=${user._id}`, data);
+        console.log(res)
         setSubject("");
+        setPhone("");
         setMessage("");
         toast.success("message was successfuly send");
       }
@@ -70,7 +81,7 @@ export default function SendMessages() {
     }
   };
 
-  if(!user) {
+  if (!user) {
     toast.error("something went wrong please try again");
     return navigate("/")
   }
@@ -78,12 +89,12 @@ export default function SendMessages() {
   return (
     <>
       {loader ? (
-       null
+        null
       ) : (
         <>
           <Nav />
           <Heading as="h3" size="lg" textAlign={"center"}>
-         Howdy {user.username} Send text messages with our provider
+            Howdy {user.username} Send text messages with our provider
           </Heading>
           <Center>
             <HStack spacing={8} mt={"2rem"}>
@@ -97,16 +108,18 @@ export default function SendMessages() {
                     <FormLabel>SMS Subject</FormLabel>
                     <Input
                       type="sms-subject"
+                      placeholder="enter your message subject"
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
                     />
                   </FormControl>
-                  <FormControl id="sms-phone" isRequired mt={3}>
-                    <FormLabel>Enter Number</FormLabel>
-                    <Input
-                      type="sms-phone"
+                  <FormControl isRequired mt={3}>
+                    <FormLabel>Phone Number</FormLabel>
+                    <PhoneNumberInput
                       value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder='enter the phone you would like this message to be send to'
+                      options={countryOptions}
+                      onChange={value => setPhone(value)}
                     />
                   </FormControl>
                   <FormControl id="sms-message" isRequired mt={3}>
@@ -114,10 +127,10 @@ export default function SendMessages() {
                     <FormControl id="sms-message">
                       <Textarea
                         borderColor="gray.300"
+                        placeholder='enter the message context'
                         _hover={{
                           borderRadius: "gray.300",
                         }}
-                        placeholder="message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                       />
@@ -136,6 +149,16 @@ export default function SendMessages() {
                 ) : (
                   <MessageBody subject={subject} message={message} />
                 )}
+                <LinkBox as='article' maxW='sm' p='5'>
+                  <Heading size='md' my='2'>
+                    <LinkOverlay href='#'>
+                      Message Details Report
+                    </LinkOverlay>
+                  </Heading>
+                  <Text>
+                    {phone ? <p>Message will be send to: {phone}</p> : <p>Please fill out the phone number input to see the number</p>}
+                  </Text>
+                </LinkBox>
               </Box>
             </HStack>
           </Center>

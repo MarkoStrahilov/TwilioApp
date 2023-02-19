@@ -1,7 +1,7 @@
 import { Box, Flex, keyframes, Tooltip } from '@chakra-ui/react';
 import React from 'react';
 
-export default function StatusIndicator() {
+export default function StatusIndicator({credits}) {
   const activeColor = 'green.500';
   const inactiveColor = 'gray.400';
   const ringScaleMin = 0.33;
@@ -40,8 +40,9 @@ export default function StatusIndicator() {
 
   return (
     <Flex
-      w="full"
       padding={"1rem"}
+      justifyContent="center"
+      alignItems="start"
       flexDir="column"
       overflow="hidden">
       <Tooltip label={`Status: Active`} textTransform="capitalize">

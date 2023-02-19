@@ -22,6 +22,7 @@ import {
               <Th>Account Id</Th>
               <Th>Status</Th>
               <Th>Message</Th>
+              <Th>Send to</Th>
               <Th>Date</Th>
             </Tr>
           </Thead>
@@ -31,6 +32,7 @@ import {
               <Td>{message._id}</Td>
               <Td color={'green.600'}>{message.status}</Td>
               <Td>{message?.text}</Td>
+              <Td>{message?.toPhoneNumber}</Td>
               <Td>{message?.createdAt}</Td>
             </Tr>
             ))} 

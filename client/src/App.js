@@ -3,7 +3,7 @@ import { ToastContainer } from "react-toastify";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
-import SendMessages from "./components/SendMessages";
+import SendMessages from "./components/Dashboard";
 import PricingPlans from "./components/PricingPlans";
 import Contact from "./pages/Contact";
 import Settings from "./pages/Settings"

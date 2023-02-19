@@ -7,6 +7,10 @@ const messageSchema = new Schema({
         type: String,
         required: true
     },
+    toPhoneNumber: {
+        type: String,
+        required: true
+    },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

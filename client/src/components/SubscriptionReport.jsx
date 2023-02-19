@@ -14,7 +14,7 @@ import {
     Flex
   } from '@chakra-ui/react';
 
-const SubscriptionReport = ({plan}) => {
+const SubscriptionReport = ({plan, credits}) => {
     return (
         <Box>
             <Box>
@@ -25,15 +25,15 @@ const SubscriptionReport = ({plan}) => {
                     <Box>
                         <Flex>
                             <Text margin={'.6rem 0'}>Active</Text>
-                                <Indicator />
+                                <Indicator credits={credits}/>
                             </Flex>
                     </Box>
                     <Box>
                         <Heading size='xs'>Plan Overview</Heading>
                         <Text pt='2' fontSize='sm'>
-                            Plan activated with  name <b>{plan.name}.</b><br />
-                            Plan purchased for <b>$ {plan.priceInUSD}.</b><br />
-                            Remaining <b>{plan.credits} credits</b> untill the end of the subscription.
+                            Plan activated with  name <b>{plan.name}</b><br />
+                            Plan purchased for <b>$ {plan.priceInUSD}</b><br />
+                            Remaining <b>{plan.credits} credits</b> untill the end of the subscription
                         </Text>
                     </Box>
                     <Box>

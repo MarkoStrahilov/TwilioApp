@@ -53,6 +53,7 @@ module.exports.sendMessage = async(req, res) => {
 
         const newMessage = new Message({
             status: "success",
+            toPhoneNumber: req.body.phone,
             userId: foundUser._id,
             heading: req.body.subject,
             text: req.body.message,
