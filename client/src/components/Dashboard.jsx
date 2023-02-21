@@ -25,6 +25,7 @@ import MessageBody from "./MessageBody";
 import EmptyMessage from "./EmptyMessage";
 import TableMessages from "./TableMessages";
 import PhoneNumberInput from "./PhoneNumberInput";
+import Loader from "../shared/Loader";
 
 export default function SendMessages() {
 
@@ -89,7 +90,7 @@ export default function SendMessages() {
   return (
     <>
       {loader ? (
-        null
+        <loader />
       ) : (
         <>
           <Nav />

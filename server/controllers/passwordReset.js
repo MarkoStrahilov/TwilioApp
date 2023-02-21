@@ -152,4 +152,3 @@ module.exports.resetPassword = async(req, res) => {
     }
 
 }
-

@@ -64,12 +64,48 @@ module.exports.updatePassword = async(req,res) => {
 
     try {
 
+        const foundUser = await User.findOne({_id: req.query.id})
+
         const {oldPassword, newPassword, retypeNewPassword} = req.body
-        
-        return res.status(200).send({
-            status: "success",
-            message: "Fetching user data",
-            data: req.body,
+
+
+        if(newPassword !== retypeNewPassword) {
+
+            return res.status(406).send({
+                status: "fail",
+                message: "passwords don't match"
+            })
+
+        }
+
+        if (newPassword.length <= 7 || newPassword.indexOf(" ") !== -1) {
+
+            return res.status(400).send({
+                status: "fail",
+                message: 'the new password must be longer then 6 characters and should not contain any spaces',
+            })
+
+        }
+
+        foundUser.changePassword(oldPassword, retypeNewPassword, async function(err) {
+
+            if (err) {
+
+               return res.status(406).send({
+                    status: "fail",
+                    message: "the old password you entered is incorrect"
+                });
+
+            } else {
+
+                await foundUser.save()
+
+                return res.status(200).send({
+                    status: "success",
+                    message: "password reset was successful",
+                    data: { foundUser }
+                })
+            }
         });
 
     } catch (error) {
@@ -81,6 +117,26 @@ module.exports.updatePassword = async(req,res) => {
 
     }
 
+}
+
+module.exports.updateUser = async(req,res) => {
+    
+    try {
+
+        return res.status(200).send({
+            status: "success",
+            message: "User information was updated",
+            data: { foundUser }
+        })
+        
+    } catch (error) {
+
+        return res.status(400).send({
+            status: "fail",
+            message: error.message,
+        });
+        
+    }
 }
 
 module.exports.deleteUser = async(req, res) => {

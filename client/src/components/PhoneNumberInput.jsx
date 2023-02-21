@@ -11,6 +11,7 @@ import {
 import Flag from "react-world-flags";
 import { AsYouType } from "libphonenumber-js";
 import { getCountryTelCode } from "../hooks/Countries";
+import {AiOutlinePhone} from 'react-icons/ai'
 
 export default function PhoneNumberInput({
   size,
@@ -75,7 +76,7 @@ export default function PhoneNumberInput({
               <Flag height="1rem" code={selectedCountry || ""} />
             </Box>
           ) : (
-            <Icon name="phone" />
+            <AiOutlinePhone />
           )}
         </Flex>
       </InputLeftElement>
