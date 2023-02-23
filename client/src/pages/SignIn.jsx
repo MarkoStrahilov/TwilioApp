@@ -7,13 +7,13 @@ import {
   Input,
   Checkbox,
   Stack,
-  Link,
   Button,
   Heading,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -47,7 +47,7 @@ export default function SignIn() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            check out our API <Link to={'/docs'} style={{color: "blue"}}>documentation</Link> ✌️
           </Text>
         </Stack>
         <Box
@@ -60,7 +60,7 @@ export default function SignIn() {
             <FormControl id="email">
               <FormLabel>Username</FormLabel>
               <Input
-                type="email"
+                type="text"
                 value={username}
                 onChange={(e) => setUserame(e.target.value)}
               />

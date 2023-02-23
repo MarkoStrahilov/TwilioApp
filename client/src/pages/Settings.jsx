@@ -36,6 +36,10 @@ const Settings = () => {
 
     const { user, loading } = useAuth()
 
+    const handleUpdateUser = async (e) => {
+        console.log(userData)
+    }
+
     const handlePasswordChange = async () => {
         try {
             if (oldPassword === '' || newPassword === '' || retypeNewPassword === '') {
@@ -62,32 +66,44 @@ const Settings = () => {
             <Nav />
             <div style={{ padding: "3rem 10rem" }}>
                 {user.planActive ? <SettingsVerified user={user} /> : <SettingsNotVerified />}
-                <Heading margin={"2rem 0 0 0"}>Personal Information</Heading>
-                <HStack>
-                    <Box>
-                        <FormControl id="firstName">
-                            <FormLabel>Username</FormLabel>
-                            <Input type="text" size='md' value={user.username} onChange={(e) => setUserData({ username: e.target.value })} />
-                        </FormControl>
-                    </Box>
-                    <Box p={"2rem 7rem"}>
-                        <FormControl id="lastName">
-                            <FormLabel>E-mail Address</FormLabel>
-                            <Input type="text" size='md' value={user.email} onChange={(e) => setUserData({ email: e.target.value })} />
-                        </FormControl>
-                    </Box>
-                </HStack>
-                <div style={{ textAlign: "end", margin: "2rem 0" }}>
-                    <Button colorScheme="blue" onClick={handlePasswordChange}>
-                        Update Settings
-                    </Button>
-                </div>
+                <Divider />
+                <Box>
+                    <Flex>
+                        <Box p='4' flex='2'>
+                            <Text fontSize='3xl' color={'gray.600'} margin={"2rem 0"} >
+                                Your account info on our service
+                            </Text>
+                            <Text fontSize='sm' color={'gray.600'}>
+                              Here you can see your personal info and options to change, update and manage it based on your prefrencess and ideas
+                            </Text> 
+                        </Box>
+                        <Spacer />
+                        <Box p='4' flex='2'>
+                            <FormControl id="firstName" margin={'1rem 0'}>
+                                <FormLabel>Username</FormLabel>
+                                <Input type="text" size='md' value={user.username} disabled name="username" onChange={(e) => setUserData({ username: e.target.value })} />
+                            </FormControl>
+                            <FormControl id="lastName" margin={'1rem 0'}>
+                                <FormLabel>E-mail Address</FormLabel>
+                                <Input type="text" size='md' value={user.email} disabled name="email" onChange={(e) => setUserData({ email: e.target.value })} />
+                            </FormControl>
+                            <div style={{ textAlign: "end", margin: "2rem 0" }}>
+                                <Button colorScheme="blue" onClick={handleUpdateUser}>
+                                    Update Settings
+                                </Button>
+                            </div>
+                        </Box>
+                    </Flex>
+                </Box>
                 <Divider />
                 <Box>
                     <Flex>
                         <Box p='4' flex='2'>
                             <Text fontSize='3xl' color={'gray.600'} margin={"2rem 0"} >
                                 Change and update your password
+                            </Text>
+                            <Text fontSize='sm' color={'gray.600'}>
+                            It's a good idea to use a strong password that you're not using elsewhere
                             </Text>
                         </Box>
                         <Spacer />

@@ -41,7 +41,7 @@ const SettingsVerified = ({ user }) => {
             see and customize all your personal details
           </Text>
         </div>
-        <Alerts className='px-5' message={"Use the application key to send messages with our API, you currently have an active plan"} />
+        <Alerts className='px-5' message={"Use the application key to send messages with our API, you currently have an active plan. In order to see how to use your API key please visit the official documentation"} />
       </div>
       <div className="mockup-code">
         <pre data-prefix="$">
@@ -59,7 +59,7 @@ const SettingsVerified = ({ user }) => {
               Subscription Status
             </Text>
             <Text fontSize='sm' color={'gray.600'}>
-              Subscribe to receive status update via email for Twilio services. We'll email you the details when the service is experiencing any problems on our end.
+              Subscribe to receive status update via email for Twilio services. We'll email you the details when the service is experiencing any problems on our end
             </Text>
           </Box>
           <Spacer />

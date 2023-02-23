@@ -1,56 +1,63 @@
 import { useState } from 'react';
 import {
-    Container,
-    Flex,
-    Box,
-    Heading,
-    Text,
-    IconButton,
-    Button,
-    VStack,
-    HStack,
-    Wrap,
-    WrapItem,
-    FormControl,
-    FormLabel,
-    Input,
-    InputGroup,
-    InputLeftElement,
-    Textarea,
-  } from '@chakra-ui/react';
-  import {
-    MdPhone,
-    MdEmail,
-    MdLocationOn,
-    MdFacebook,
-    MdOutlineEmail,
-  } from 'react-icons/md';
+  Container,
+  Flex,
+  Box,
+  Heading,
+  Text,
+  IconButton,
+  Button,
+  VStack,
+  HStack,
+  Wrap,
+  WrapItem,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Textarea,
+} from '@chakra-ui/react';
+import {
+  MdPhone,
+  MdEmail,
+  MdLocationOn,
+  MdFacebook,
+  MdOutlineEmail,
+} from 'react-icons/md';
 
-  import { toast } from 'react-toastify'
-  import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
+import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
+import useNavarHook from '../hooks/useNavarHook'
+import Loader from '../shared/Loader';
+import Nav from '../shared/Nav';
+import Navbar from '../pages/Navbar'
+
+export default function Contact() {
+
+  const { user, loader } = useNavarHook()
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("")
+
+  const formSubmit = async () => {
+    try {
+      const data = { name, email, message };
+      console.log(data)
+      toast.success("Thanks for contacting us, we will reply as soon as possible");
+    } catch (error) {
+      toast.error('something went wrong, please try again later');
+    }
+  }
+
+  if(loader) return <Loader />
   
-  import { BsGithub, BsDiscord, BsPerson } from 'react-icons/bs';
-  import Navbar from './Navbar';
-
-  export default function Contact() {
-
-    const [name,setName] = useState("");
-    const [email,setEmail] = useState("");
-    const [message,setMessage] = useState("")
-
-    const formSubmit = async() => {
-      try {
-          const data = {name,email,message};
-          console.log(data)
-          toast.success("Thanks for contacting us, we will reply as soon as possible");
-      } catch (error) {
-          toast.error('something went wrong, please try again later');
-      }
-  } 
-
-    return (
-      <>
-      <Navbar />
+  return (
+    <>
+      {user ? <Nav /> : <Navbar />}
       <Container bg="#9DC4FB" maxW="full" maxH={"100vh"} mt={0} centerContent overflow="hidden">
         <Flex>
           <Box
@@ -144,7 +151,7 @@ import {
                               pointerEvents="none"
                               children={<BsPerson color="gray.800" />}
                             />
-                            <Input type="text" size="md" value={name} onChange={(e) => setName(e.target.value)}/>
+                            <Input type="text" size="md" value={name} onChange={(e) => setName(e.target.value)} />
                           </InputGroup>
                         </FormControl>
                         <FormControl id="name">
@@ -154,7 +161,7 @@ import {
                               pointerEvents="none"
                               children={<MdOutlineEmail color="gray.800" />}
                             />
-                            <Input type="text" size="md" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                            <Input type="text" size="md" value={email} onChange={(e) => setEmail(e.target.value)} />
                           </InputGroup>
                         </FormControl>
                         <FormControl id="name">
@@ -165,7 +172,7 @@ import {
                               borderRadius: 'gray.300',
                             }}
                             placeholder="message"
-                            value={message} 
+                            value={message}
                             onChange={(e) => setMessage(e.target.value)}
                           />
                         </FormControl>
@@ -176,7 +183,7 @@ import {
                             color="white"
                             _hover={{}}
                             onClick={formSubmit}
-                            >
+                          >
                             Send Message
                           </Button>
                         </FormControl>
@@ -189,6 +196,6 @@ import {
           </Box>
         </Flex>
       </Container>
-      </>
-    );
-  }
+    </>
+  );
+}

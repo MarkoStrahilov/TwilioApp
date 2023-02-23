@@ -47,7 +47,7 @@ export default function SendMessages() {
       .then((res) => {
         setLoader(false);
         setUser(res?.data?.data?.user);
-        setMessages(res?.data?.data?.user?.messages)
+        setMessages(res?.data?.data?.messages)
       })
       .catch((error) => {
         navigate("/sign-in");
@@ -59,6 +59,7 @@ export default function SendMessages() {
     label: name,
     value: iso
   }));
+
 
   const formSubmit = async () => {
     try {

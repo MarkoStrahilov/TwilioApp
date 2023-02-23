@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Message = require("../models/message");
 const jwt = require("jsonwebtoken");
 
 module.exports.getCurrentUser = async(req, res) => {
@@ -16,12 +17,13 @@ module.exports.getCurrentUser = async(req, res) => {
                 process.env.JWT_SECRET_KEY || "urkjrsdiowqeol3489dfh&^&vh"
             );
 
-            const foundUser = await User.findOne({ _id: decodedData.id }).populate('messages').populate('plan');
+            const foundUser = await User.findOne({ _id: decodedData.id }).populate("messages").populate('plan');
+            const messages = await Message.find({ _id: { $in: foundUser.messages } }).limit(5).sort({createdAt: -1})
 
             return res.status(200).send({
                 status: "success",
                 message: "Fetching user data",
-                data: { user: foundUser },
+                data: { user: foundUser, messages },
             });
         }
     } catch (error) {
@@ -37,7 +39,7 @@ module.exports.fetchUser = async(req, res) => {
     try {
         const foundUser = await User.find({ _id: req.query.id })
             .populate("plan")
-            .populate("messages");
+            .populate("messages").limit(5);
 
         if (!foundUser) {
             return res.status(404).send({

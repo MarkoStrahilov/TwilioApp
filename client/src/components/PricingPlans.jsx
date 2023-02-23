@@ -14,6 +14,10 @@ import {
 
 import { useEffect,useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
+
+import useNavarHook from '../hooks/useNavarHook'
+import Loader from '../shared/Loader';
+
 import Navbar from '../pages/Navbar'
 import Nav from '../shared/Nav';
 import useAuth from '../hooks/useAuth';
@@ -44,24 +48,10 @@ const plans = [
 
 export default function ThreeTierPricing() {
 
-  const [user,setUser] = useState({})
-  const [loader, setLoader] = useState(false);
-
-  useEffect(() => {
-    setLoader(true);
-    axios
-      .get("/api/v1/current/user")
-      .then((res) => {
-        setLoader(false);
-        setUser(res?.data?.data?.user);
-      })
-      .catch((error) => {
-        setLoader(false);
-      });
-  }, []);
+  const {user,loader} = useNavarHook()
 
   if(loader) {
-    return <h1>Loading</h1>
+    return <Loader />
   }
 
   const handlePlanChange = async(id) => {
@@ -78,7 +68,7 @@ export default function ThreeTierPricing() {
 
   return (
     <>
-    <Nav />
+    {user ? <Nav /> : <Navbar />}
     <Box py={12}>
       <VStack spacing={2} textAlign="center">
         <Heading as="h1" fontSize="4xl">
