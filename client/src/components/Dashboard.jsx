@@ -67,17 +67,30 @@ export default function SendMessages() {
 
         toast.error("make sure to fill out the required fields");
 
-      } else {
-        setMessages([message, ...messages]);
+      } 
 
         const data = { subject, phone, message };
         const res = await axios.post(`/api/v1/send/message?id=${user._id}`, data);
-        console.log(res)
+        const recievedData = res.data?.data?.newMessage
+
+        const messageData = {
+          _id: recievedData._id,
+          status: recievedData.status,
+          text: recievedData.text,
+          toPhoneNumber: recievedData.toPhoneNumber,
+          createdAt: recievedData.createdAt
+        }
+
+        setMessages([
+          messageData,
+          ...messages
+        ]);
+
         setSubject("");
         setPhone("");
         setMessage("");
         toast.success("message was successfuly send");
-      }
+
     } catch (error) {
       toast.error(error.response.data.message);
     }

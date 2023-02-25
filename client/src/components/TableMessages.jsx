@@ -19,7 +19,7 @@ import {
           <TableCaption>See the recent 5 messages that you send</TableCaption>
           <Thead>
             <Tr>
-              <Th>Account Id</Th>
+              <Th>Message Id</Th>
               <Th>Status</Th>
               <Th>Message</Th>
               <Th>Send to</Th>
@@ -27,11 +27,11 @@ import {
             </Tr>
           </Thead>
           <Tbody>
-             {messages && messages.map(message => (
+             {messages.map(message => (
               <Tr key={message._id}>
               <Td>{message._id}</Td>
               <Td color={'green.600'}>{message.status}</Td>
-              <Td>{message?.text}</Td>
+              {message?.text.length < 30 ? <Td>{message?.text}</Td> : <Td>{message?.text.substring(0,30)} ...</Td>}
               <Td>{message?.toPhoneNumber}</Td>
               <Td>{message?.createdAt}</Td>
             </Tr>
