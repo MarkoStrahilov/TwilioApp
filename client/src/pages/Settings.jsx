@@ -26,10 +26,8 @@ import {
 
 const Settings = () => {
 
-    const [userData, setUserData] = useState({
-        username: "",
-        email: ""
-    })
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [retypeNewPassword, setRetypeNewPassword] = useState("");
@@ -37,7 +35,16 @@ const Settings = () => {
     const { user, loading } = useAuth()
 
     const handleUpdateUser = async (e) => {
-        console.log(userData)
+        
+        try {
+            const data = {username,email}
+            const res = await axios.patch(`/api/v1/update/user/data?id=${user._id}`, data);
+            toast.success(res?.data?.message);
+            console.log(res?.data)
+        } catch (error) {
+            toast.error(error.response.data.message);
+            console.log(error.response.data)
+        }
     }
 
     const handlePasswordChange = async () => {
@@ -51,7 +58,6 @@ const Settings = () => {
                 console.log(res)
             }
         } catch (error) {
-            console.log(error)
             toast.error(error.response.data.message);
         }
     }
@@ -81,11 +87,11 @@ const Settings = () => {
                         <Box p='4' flex='2'>
                             <FormControl id="firstName" margin={'1rem 0'}>
                                 <FormLabel>Username</FormLabel>
-                                <Input type="text" size='md' value={user.username} disabled name="username" onChange={(e) => setUserData({ username: e.target.value })} />
+                                <Input type="text" size='md' placeholder={user.username}  name="username" onChange={(e) => setUsername(e.target.value)} />
                             </FormControl>
                             <FormControl id="lastName" margin={'1rem 0'}>
                                 <FormLabel>E-mail Address</FormLabel>
-                                <Input type="text" size='md' value={user.email} disabled name="email" onChange={(e) => setUserData({ email: e.target.value })} />
+                                <Input type="text" size='md' placeholder={user.email} name="email" onChange={(e) => setEmail(e.target.value )} />
                             </FormControl>
                             <div style={{ textAlign: "end", margin: "2rem 0" }}>
                                 <Button colorScheme="blue" onClick={handleUpdateUser}>
