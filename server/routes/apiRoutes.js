@@ -8,7 +8,7 @@ const { asyncErrorHandle, isLoggedIn, isAuthenticatedUser } = require('../middle
 const { register, validateToken } = require('../controllers/register')
 const { signIn, signOut } = require('../controllers/signIn')
 const { resetPassword, requestPasswordReset } = require('../controllers/passwordReset')
-const { deleteUser, getCurrentUser, disableAccount, fetchUser, updatePassword, updateUser } = require("../controllers/user")
+const { deleteUser, getCurrentUser, disableAccount, fetchUser, updatePassword, updateUser, twoFactorAuthentication } = require("../controllers/user")
 const { sendMessage } = require("../controllers/messages");
 const { userPlans } = require('../controllers/plans')
 
@@ -27,9 +27,10 @@ router.put('/api/v1/validate/password/reset', asyncErrorHandle(resetPassword))
 // user routes
 router.get("/api/v1/current/user", asyncErrorHandle(getCurrentUser))
 router.post("/api/v1/user", asyncErrorHandle(fetchUser))
-router.put("/api/v1/update/password", asyncErrorHandle(updatePassword))
-router.patch("/api/v1/update/user/data", asyncErrorHandle(updateUser))
-router.delete("/api/v1/delete/user", asyncErrorHandle(deleteUser))
+router.put("/api/v1/update/password", isLoggedIn, asyncErrorHandle(updatePassword))
+router.patch("/api/v1/update/user/data", isLoggedIn, asyncErrorHandle(updateUser))
+router.delete("/api/v1/update/2FA/authentivcation/user", isLoggedIn, asyncErrorHandle(twoFactorAuthentication))
+router.delete("/api/v1/delete/user", isLoggedIn, asyncErrorHandle(deleteUser))
 router.delete("/api/v1/disable/account", asyncErrorHandle(disableAccount))
 
 // messages routes

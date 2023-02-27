@@ -2,7 +2,7 @@ const User = require("../models/user");
 const Message = require("../models/message");
 const jwt = require("jsonwebtoken");
 
-module.exports.getCurrentUser = async(req, res) => {
+module.exports.getCurrentUser = async (req, res) => {
     try {
         const { token } = req.cookies;
 
@@ -18,7 +18,7 @@ module.exports.getCurrentUser = async(req, res) => {
             );
 
             const foundUser = await User.findOne({ _id: decodedData.id }).populate("messages").populate('plan');
-            const messages = await Message.find({ _id: { $in: foundUser.messages } }).limit(5).sort({createdAt: -1})
+            const messages = await Message.find({ _id: { $in: foundUser.messages } }).limit(5).sort({ createdAt: -1 })
 
             return res.status(200).send({
                 status: "success",
@@ -34,7 +34,7 @@ module.exports.getCurrentUser = async(req, res) => {
     }
 };
 
-module.exports.fetchUser = async(req, res) => {
+module.exports.fetchUser = async (req, res) => {
 
     try {
         const foundUser = await User.find({ _id: req.query.id })
@@ -62,16 +62,16 @@ module.exports.fetchUser = async(req, res) => {
     }
 };
 
-module.exports.updatePassword = async(req,res) => {
+module.exports.updatePassword = async (req, res) => {
 
     try {
 
-        const foundUser = await User.findOne({_id: req.query.id})
+        const foundUser = await User.findOne({ _id: req.query.id })
 
-        const {oldPassword, newPassword, retypeNewPassword} = req.body
+        const { oldPassword, newPassword, retypeNewPassword } = req.body
 
 
-        if(newPassword !== retypeNewPassword) {
+        if (newPassword !== retypeNewPassword) {
 
             return res.status(406).send({
                 status: "fail",
@@ -89,11 +89,11 @@ module.exports.updatePassword = async(req,res) => {
 
         }
 
-        foundUser.changePassword(oldPassword, retypeNewPassword, async function(err) {
+        foundUser.changePassword(oldPassword, retypeNewPassword, async function (err) {
 
             if (err) {
 
-               return res.status(406).send({
+                return res.status(406).send({
                     status: "fail",
                     message: "the old password you entered is incorrect"
                 });
@@ -111,7 +111,7 @@ module.exports.updatePassword = async(req,res) => {
         });
 
     } catch (error) {
-        
+
         return res.status(400).send({
             status: "fail",
             message: error.message,
@@ -121,27 +121,78 @@ module.exports.updatePassword = async(req,res) => {
 
 }
 
-module.exports.updateUser = async(req,res) => {
-    
+module.exports.updateUser = async (req, res) => {
+
     try {
+        const foundUser = await User.findOne({ _id: req.query.id })
+
+
+        // if(req.body.username !== '' && req.body.email === '') {
+        //     await User.updateOne(foundUser, {username: username},{ runValidators: true })
+        // }
+
+        // if(req.body.username === '' && req.body.email !== '') {
+        //     await User.updateOne(foundUser, {email: email},{ runValidators: true })
+        // }
+
+        await User.updateOne(foundUser, req.body, { runValidators: true, new: true })
+
+        await foundUser.save()
 
         return res.status(200).send({
             status: "success",
-            message: "User information was updated",
+            message: "user information was updated",
             data: { foundUser }
         })
-        
+
     } catch (error) {
 
         return res.status(400).send({
             status: "fail",
             message: error.message,
         });
-        
+
     }
 }
 
-module.exports.deleteUser = async(req, res) => {
+module.exports.twoFactorAuthentication = async (req, res) => {
+
+    try {
+
+        const foundUser = await User.findOne({ _id: req.query.id });
+
+        const { email, phone } = req.body;
+
+        if (email === '' || phone === '') {
+            if (email !== '' && phone === '') {
+                await User.updateOne(foundUser, { factorAuthentincationEmail: email }, { runValidators: true })
+            } else if (email === '' && phone !== '') {
+                await User.updateOne(foundUser, { factorAuthentincationPhone: phone }, { runValidators: true })
+            }
+        } else {
+            await User.updateOne(foundUser, req.body, { runValidators: true, new: true })
+        }
+
+        await foundUser.save()
+
+        return res.status(200).send({
+            status: "success",
+            message: "user information was updated",
+            data: { foundUser }
+        })
+
+    } catch (error) {
+
+        return res.status(400).send({
+            status: "fail",
+            message: error.message,
+        });
+
+    }
+
+}
+
+module.exports.deleteUser = async (req, res) => {
     try {
         const foundUser = await User.findOne({ _id: req.query.id });
 
@@ -175,7 +226,7 @@ module.exports.deleteUser = async(req, res) => {
     }
 };
 
-module.exports.disableAccount = async(req, res) => {
+module.exports.disableAccount = async (req, res) => {
     try {
         const foundUser = await User.findOne({ _id: req.query.id });
 

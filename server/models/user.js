@@ -7,7 +7,11 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     email: {
         type: String,
-        required: true
+    },
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false
     },
     isVerified: {
         type: Boolean,
@@ -16,6 +20,14 @@ const userSchema = new Schema({
     isDisabled: {
         type: Boolean,
         default: false
+    },
+    factorAuthentincationEmail: {
+        type:String,
+        default: undefined
+    },
+    factorAuthentincationPhone: {
+        type: String,
+        default: undefined
     },
     messages: [{
         type: Schema.Types.ObjectId,

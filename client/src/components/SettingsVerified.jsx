@@ -28,19 +28,9 @@ const SettingsVerified = ({ user }) => {
     margin: "0 0 3rem 0"
   }
 
-  const centerStyles = {
-    textAlign: "center"
-  }
-
   return (
     <div>
       <div style={styles}>
-        <div style={centerStyles}>
-          <Heading margin={"2rem 0 0 0"}>Account Data</Heading>
-          <Text fontSize={'lg'} color={'gray.600'} margin={" 0 0 2rem 0"}>
-            see and customize all your personal details
-          </Text>
-        </div>
         <Alerts className='px-5' message={"Use the application key to send messages with our API, you currently have an active plan. In order to see how to use your API key please visit the official documentation"} />
       </div>
       <div className="mockup-code">

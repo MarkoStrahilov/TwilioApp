@@ -67,29 +67,29 @@ export default function SendMessages() {
 
         toast.error("make sure to fill out the required fields");
 
-      } 
+      }
 
-        const data = { subject, phone, message };
-        const res = await axios.post(`/api/v1/send/message?id=${user._id}`, data);
-        const recievedData = res.data?.data?.newMessage
+      const data = { subject, phone, message };
+      const res = await axios.post(`/api/v1/send/message?id=${user._id}`, data);
+      const recievedData = res.data?.data?.newMessage
 
-        const messageData = {
-          _id: recievedData._id,
-          status: recievedData.status,
-          text: recievedData.text,
-          toPhoneNumber: recievedData.toPhoneNumber,
-          createdAt: recievedData.createdAt
-        }
+      const messageData = {
+        _id: recievedData._id,
+        status: recievedData.status,
+        text: recievedData.text,
+        toPhoneNumber: recievedData.toPhoneNumber,
+        createdAt: recievedData.createdAt
+      }
 
-        setMessages([
-          messageData,
-          ...messages
-        ]);
+      setMessages([
+        messageData,
+        ...messages
+      ]);
 
-        setSubject("");
-        setPhone("");
-        setMessage("");
-        toast.success("message was successfuly send");
+      setSubject("");
+      setPhone("");
+      setMessage("");
+      toast.success("message was successfuly send");
 
     } catch (error) {
       toast.error(error.response.data.message);
@@ -108,11 +108,11 @@ export default function SendMessages() {
       ) : (
         <>
           <Nav />
-          <Heading as="h3" size="lg" textAlign={"center"}>
-            Howdy {user.username} Send text messages with our provider
+          <Heading as="h3" size="lg" textAlign={"center"} margin={"2rem 0"}>
+            Send text messages with our provider
           </Heading>
           <Center>
-            <HStack spacing={8} mt={"2rem"}>
+            <HStack spacing={8} mt={"0 2rem 2rem 2rem"}>
               <Box p={5} shadow="md" borderWidth="1px">
                 <Heading fontSize="xl">Create Your Message</Heading>
                 <Text mt={4}>
@@ -128,15 +128,6 @@ export default function SendMessages() {
                       onChange={(e) => setSubject(e.target.value)}
                     />
                   </FormControl>
-                  <FormControl isRequired mt={3}>
-                    <FormLabel>Phone Number</FormLabel>
-                    <PhoneNumberInput
-                      value={phone}
-                      placeholder='enter the phone you would like this message to be send to'
-                      options={countryOptions}
-                      onChange={value => setPhone(value)}
-                    />
-                  </FormControl>
                   <FormControl id="sms-message" isRequired mt={3}>
                     <FormLabel>SMS Body</FormLabel>
                     <FormControl id="sms-message">
@@ -148,6 +139,15 @@ export default function SendMessages() {
                         }}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormControl isRequired mt={3}>
+                      <FormLabel>Phone Number</FormLabel>
+                      <PhoneNumberInput
+                        value={phone}
+                        placeholder='enter the phone you would like this message to be send to'
+                        options={countryOptions}
+                        onChange={value => setPhone(value)}
                       />
                     </FormControl>
                   </FormControl>
