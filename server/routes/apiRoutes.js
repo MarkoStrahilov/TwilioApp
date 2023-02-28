@@ -26,7 +26,7 @@ router.put('/api/v1/validate/password/reset', asyncErrorHandle(resetPassword))
 
 // user routes
 router.get("/api/v1/current/user", asyncErrorHandle(getCurrentUser))
-router.post("/api/v1/user", asyncErrorHandle(fetchUser))
+router.get("/api/v1/fetch/user", asyncErrorHandle(fetchUser))
 router.put("/api/v1/update/password", isLoggedIn, asyncErrorHandle(updatePassword))
 router.patch("/api/v1/update/user/data", isLoggedIn, asyncErrorHandle(updateUser))
 router.delete("/api/v1/update/2FA/authentivcation/user", isLoggedIn, asyncErrorHandle(twoFactorAuthentication))

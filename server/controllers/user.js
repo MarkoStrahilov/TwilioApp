@@ -37,9 +37,9 @@ module.exports.getCurrentUser = async (req, res) => {
 module.exports.fetchUser = async (req, res) => {
 
     try {
-        const foundUser = await User.find({ _id: req.query.id })
+        const foundUser = await User.findOne({ _id: req.query.id })
             .populate("plan")
-            .populate("messages").limit(5);
+            .populate("messages")
 
         if (!foundUser) {
             return res.status(404).send({
@@ -51,7 +51,7 @@ module.exports.fetchUser = async (req, res) => {
         return res.status(200).send({
             status: "success",
             message: "Fetching user data",
-            data: { user: foundUser },
+            data: {user:foundUser},
         });
 
     } catch (error) {

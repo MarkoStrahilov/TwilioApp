@@ -31,6 +31,9 @@ import {
           const data = {username,email,password};
         const res = await axios.post("/api/v1/register/user", data);
         console.log(res.data)
+        setUsername("")
+        setEmail("")
+        setPassword("")
          toast.success("welcome new user");
       } catch (error) {
           toast.error(error.response.data.message);
