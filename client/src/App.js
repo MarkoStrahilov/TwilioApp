@@ -24,7 +24,7 @@ function App() {
         <Route path="/dashboard" element={<SendMessages />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/verify/account" element={<VerifyAccount />} />
+        <Route path="/verify/account/:userId/token/:token" element={<VerifyAccount />} />
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
       <ToastContainer />

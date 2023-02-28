@@ -102,7 +102,7 @@ const Settings = () => {
                                 Your account info on our service
                             </Text>
                             <Text fontSize='sm' color={'gray.600'}>
-                                Here you can see your personal info and options to change, update and manage it based on your prefrencess and ideas
+                                Here you can see your personal info and options to change, update and manage it based on your prefrencess and needs.
                             </Text>
                         </Box>
                         <Spacer />

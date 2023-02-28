@@ -48,12 +48,12 @@ module.exports.register = async(req, res) => {
 
         await otpToken.save()
 
-        const link = `http://localhost:4000/api/v1/register/validation/user?id=${registerUser._id}&token=${otp}&token_request_validation=true`
+        const nativeLink = `http://localhost:3000/verify/account/${registerUser._id}/token/${otp}`
 
         res.status(200).send({
             status: 'success',
             message: "please verify your account",
-            data: { link },
+            data: { nativeLink },
         })
 
     } catch (error) {
@@ -154,7 +154,6 @@ module.exports.validateToken = async(req, res, next) => {
             })
 
         })
-
 
     } catch (error) {
 
