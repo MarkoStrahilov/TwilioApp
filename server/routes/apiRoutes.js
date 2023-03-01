@@ -9,7 +9,7 @@ const { register, validateToken } = require('../controllers/register')
 const { signIn, signOut } = require('../controllers/signIn')
 const { resetPassword, requestPasswordReset } = require('../controllers/passwordReset')
 const { deleteUser, getCurrentUser, disableAccount, fetchUser, updatePassword, updateUser, twoFactorAuthentication } = require("../controllers/user")
-const { sendMessage } = require("../controllers/messages");
+const { sendMessage,sendMessageWithApi } = require("../controllers/messages");
 const { userPlans } = require('../controllers/plans')
 
 // registration / account validation
@@ -38,5 +38,8 @@ router.post('/api/v1/send/message', asyncErrorHandle(sendMessage))
 
 // pricing plans routes
 router.post('/api/v1/select/pricing/tier', isLoggedIn, asyncErrorHandle(userPlans))
+
+// API docs
+router.get('/send/message', asyncErrorHandle(sendMessageWithApi))
 
 module.exports = router
