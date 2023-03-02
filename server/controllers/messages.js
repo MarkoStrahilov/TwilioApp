@@ -100,15 +100,6 @@ module.exports.sendMessageWithApi = async(req,res) => {
         const foundPlan = await Plan.findOne({key: req.query.key})      
         const foundUser = await User.findOne({_id: foundPlan.userId})
 
-        if (foundUser.isVerified === false) {
-
-            return res.status(400).send({
-                status: 'fail',
-                message: "account is not verified"
-            })
-
-        }
-
         return res.status(200).send({
             status: "success",
             message: "message was successfuly send",

@@ -60,7 +60,7 @@ const ApiDocumentation = () => {
                     <Text fontSize='sm' color={'gray.600'} margin={"1rem 0 2rem 0"}>
                     Every programming language has a way to send an HTTP POST request. Instead of installing a special library or package, just send a POST request using your preferred method. Below are some examples in common languages.
                     </Text>
-                    <ApiRequestExampleTable />
+                    <ApiRequestExampleTable request={request}/>
                 </Box>
             </div>
         </>
