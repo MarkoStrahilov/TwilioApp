@@ -12,8 +12,8 @@ const ApiRequestExampleTable = () => {
     --data-urlencode message='Hello world' 
     `
 
-    const pythonString = `import requests
-
+    const pythonString = `
+    import requests
     response = requests.post("https://smscroc.com/send/message?key={YOUR API KEY}", {
       'phone': '5555555555',
       'message': 'Hello world',
