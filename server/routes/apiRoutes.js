@@ -10,7 +10,8 @@ const { signIn, signOut } = require('../controllers/signIn')
 const { resetPassword, requestPasswordReset } = require('../controllers/passwordReset')
 const { deleteUser, getCurrentUser, disableAccount, fetchUser, updatePassword, updateUser, twoFactorAuthentication } = require("../controllers/user")
 const { sendMessage,sendMessageWithApi } = require("../controllers/messages");
-const { userPlans } = require('../controllers/plans')
+const { userPlans } = require('../controllers/plans');
+const { contact } = require('../controllers/contact');
 
 // registration / account validation
 router.post('/api/v1/register/user', asyncErrorHandle(register))
@@ -38,6 +39,9 @@ router.post('/api/v1/send/message', asyncErrorHandle(sendMessage))
 
 // pricing plans routes
 router.post('/api/v1/select/pricing/tier', isLoggedIn, asyncErrorHandle(userPlans))
+
+// contact support
+router.patch("/api/v1/contact/support", asyncErrorHandle(contact))
 
 // API docs
 router.post('/send/message', asyncErrorHandle(sendMessageWithApi))

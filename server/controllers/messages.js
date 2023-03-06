@@ -2,8 +2,6 @@ const User = require("../models/user")
 const Message = require("../models/message")
 const Plan = require("../models/plans")
 
-
-
 module.exports.sendMessage = async (req, res) => {
 
     try {

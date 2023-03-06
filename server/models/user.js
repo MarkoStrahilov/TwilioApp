@@ -62,7 +62,7 @@ userSchema.methods.createPasswordResetToken = async function() {
 // jwt token for cookie
 userSchema.methods.getJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY || "urkjrsdiowqeol3489dfh&^&vh", {
-      expiresIn: process.env.JWT_EXPIRES || "7d",
+      expiresIn: process.env.JWT_EXPIRES || "2d",
     });
   };
 

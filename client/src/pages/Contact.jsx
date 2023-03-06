@@ -26,6 +26,7 @@ import {
   MdOutlineEmail,
 } from 'react-icons/md';
 
+import axios from 'axios'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -46,10 +47,14 @@ export default function Contact() {
   const formSubmit = async () => {
     try {
       const data = { name, email, message };
-      console.log(data)
-      toast.success("Thanks for contacting us, we will reply as soon as possible");
+      const res = await axios.patch(`/api/v1/contact/support`, data);
+      console.log(res?.data)
+      toast.success(res?.data?.message);
+      setName("")
+      setEmail("")
+      setMessage("")
     } catch (error) {
-      toast.error('something went wrong, please try again later');
+      toast.error(error.response.data.message);
     }
   }
 
