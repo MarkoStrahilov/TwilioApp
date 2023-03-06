@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const Token = require('../models/otpToken')
 const bcrypt = require('bcrypt')
+const sendEmail = require('../utils/sendEmail')
 
 module.exports.register = async(req, res) => {
     try {
@@ -49,6 +50,16 @@ module.exports.register = async(req, res) => {
         await otpToken.save()
 
         const nativeLink = `http://localhost:3000/verify/account/${registerUser._id}/token/${otp}`
+
+        const otpText = `<div>
+        Hello There, ${username}, please verify your account here: ${nativeLink}
+        </div>`
+
+        sendEmail({
+            email:email,
+            subject: "Account Verification",
+            text: otpText
+        })
 
         res.status(200).send({
             status: 'success',

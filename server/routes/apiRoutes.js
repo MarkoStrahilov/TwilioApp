@@ -40,6 +40,6 @@ router.post('/api/v1/send/message', asyncErrorHandle(sendMessage))
 router.post('/api/v1/select/pricing/tier', isLoggedIn, asyncErrorHandle(userPlans))
 
 // API docs
-router.get('/send/message', asyncErrorHandle(sendMessageWithApi))
+router.post('/send/message', asyncErrorHandle(sendMessageWithApi))
 
 module.exports = router

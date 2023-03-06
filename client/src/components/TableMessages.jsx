@@ -16,7 +16,7 @@ import {
     return (
         <TableContainer>
         <Table variant='striped' colorScheme='gray' marginTop={"5rem"}>
-          <TableCaption>See the recent 5 messages that you send</TableCaption>
+          <TableCaption>See the recent messages that you've send</TableCaption>
           <Thead>
             <Tr>
               <Th>Message Id</Th>

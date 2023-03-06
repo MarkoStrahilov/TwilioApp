@@ -3,7 +3,8 @@ const Message = require("../models/message")
 const Plan = require("../models/plans")
 
 
-module.exports.sendMessage = async(req, res) => {
+
+module.exports.sendMessage = async (req, res) => {
 
     try {
 
@@ -75,12 +76,16 @@ module.exports.sendMessage = async(req, res) => {
 
         await User.updateOne(foundUser, { $push: { messages: newMessage } })
 
-        return res.status(200).send({
+         res.status(200).send({
             status: "success",
             message: "message was successfuly send",
             data: { newMessage, foundUser }
         })
 
+        return sendMessageWithTwilio({
+            text: req.body.message,
+            number: req.body.phone
+        })
 
     } catch (error) {
 
@@ -93,21 +98,21 @@ module.exports.sendMessage = async(req, res) => {
 
 }
 
-module.exports.sendMessageWithApi = async(req,res) => {
+module.exports.sendMessageWithApi = async (req, res) => {
 
     try {
-        
-        const foundPlan = await Plan.findOne({key: req.query.key})      
-        const foundUser = await User.findOne({_id: foundPlan.userId})
+
+        const foundPlan = await Plan.findOne({ key: req.query.key })
+        const foundUser = await User.findOne({ _id: foundPlan.userId })
 
         return res.status(200).send({
             status: "success",
             message: "message was successfuly send",
-            data: {user:foundUser}
+            data: { user: foundUser }
         })
 
     } catch (error) {
-        
+
         return res.status(400).send({
             status: 'fail',
             message: error.message
