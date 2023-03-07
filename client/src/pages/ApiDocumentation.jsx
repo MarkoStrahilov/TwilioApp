@@ -16,11 +16,26 @@ import Nav from '../shared/Nav';
 import Navbar from '../pages/Navbar'
 import ApiRequestExampleTable from '../CodeRequestExamples/ApiRequestExampleTable';
 
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
 const ApiDocumentation = () => {
 
     const { user, loader } = useNavarHook()
     const request = 'https://smscroc.com/send/message?key={YOUR API KEY}'
 
+    const messageString = `
+    {
+        "status": "success",
+        "message": "message was successfuly send",
+        "data": {
+            "fromUser": "n23uigjewm98q0p2owlf9,
+            "creditsRemaining": 43,
+            "message": "Hello World",
+            "toPhoneNumber": "+5555555555"
+        }
+    }
+    `
 
     if (loader) return <Loader />
 
@@ -58,9 +73,30 @@ const ApiDocumentation = () => {
                         Here are some examples of <b>requests</b> in different languages
                     </Text>
                     <Text fontSize='sm' color={'gray.600'} margin={"1rem 0 2rem 0"}>
-                    Every programming language has a way to send an HTTP POST request. Instead of installing a special library or package, just send a POST request using your preferred method. Below are some examples in common languages.
+                        Every programming language has a way to send an HTTP POST request. Instead of installing a special library or package, just send a POST request using your preferred method. Below are some examples in common languages.
                     </Text>
-                    <ApiRequestExampleTable request={request}/>
+                    <ApiRequestExampleTable request={request} />
+                </Box>
+                <Box p='4' flex='2'>
+                    <Text fontSize='xl' color={'gray.600'}>
+                        API <b>Response</b>
+                    </Text>
+                    <Text fontSize='sm' color={'gray.600'} margin={"1rem 0 2rem 0"}>
+                        The API will respond with JSON:
+                    </Text>
+                    <UnorderedList>
+                        <ListItem><b>status: </b>Whether the message was send successfully or not ("success" / "fail").</ListItem>
+                        <ListItem><b>fromUser: </b>Account ID used to send the message.</ListItem>
+                        <ListItem><b>creditsRemaining: </b>The amount of credit remaining on your key.</ListItem>
+                        <ListItem><b>message: </b>The content of the message that was send</ListItem>
+                        <ListItem><b>toPhoneNumber: </b>The number where the content of the message was send</ListItem>
+                    </UnorderedList>
+                    <Text fontSize='xl' color={'gray.600'} marginTop={"2rem"}>
+                        Here is an example of the response, when the message was send <b>successfuly</b>
+                    </Text>
+                    <SyntaxHighlighter language="node" style={docco}>
+                            {messageString}
+                        </SyntaxHighlighter>
                 </Box>
             </div>
         </>

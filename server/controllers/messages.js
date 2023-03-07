@@ -100,13 +100,75 @@ module.exports.sendMessageWithApi = async (req, res) => {
 
     try {
 
+        const {message,phone} = req.body;
+
+        if(!message || !phone) {
+
+            return res.status(400).send({
+                status: 'fail',
+                message: "please fill out all the required fields"
+            })
+
+        }
+
         const foundPlan = await Plan.findOne({ key: req.query.key })
         const foundUser = await User.findOne({ _id: foundPlan.userId })
+
+        if(!foundUser || !foundPlan) {
+
+            return res.status(404).send({
+                status: 'fail',
+                message: "plan does not exist, please check your api key"
+            })
+
+        }
+        
+        if (foundUser.planActive === false) {
+
+            return res.status(400).send({
+                status: 'fail',
+                message: "please activate a subscripton to send messages"
+            })
+
+        }
+
+        if (foundPlan.credits === 0) {
+
+            await User.updateOne(foundUser, { $set: { planActive: false } })
+            await Plan.updateOne(foundPlan, { $set: { status: "not active" } })
+            await User.updateOne(foundUser, { $set: { plan: undefined } })
+
+            return res.status(403).send({
+                status: 'fail',
+                message: "you don't have any credits left, please upgrade your subscription"
+            })
+
+        }
+
+        const newMessage = new Message({
+            status: "success",
+            toPhoneNumber: phone,
+            userId: foundUser._id,
+            text: message,
+            createdAt: Date.now()
+        })
+
+        await Plan.updateOne({ _id: foundPlan._id }, { $inc: { credits: -1 } })
+
+        await newMessage.save()
+
+        await User.updateOne(foundUser, { $push: { messages: newMessage } })
+
 
         return res.status(200).send({
             status: "success",
             message: "message was successfuly send",
-            data: { user: foundUser }
+            data: { 
+                fromUser: foundUser._id,
+                creditsRemaining: foundPlan.credits - 1, 
+                message: message,
+                toPhoneNumber: phone
+            }
         })
 
     } catch (error) {
