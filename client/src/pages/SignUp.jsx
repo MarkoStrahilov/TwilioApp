@@ -11,10 +11,12 @@ import {
     Heading,
     Text,
     useColorModeValue,
-    Link,
   } from '@chakra-ui/react';
+
   import { useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+
+  import {Link} from 'react-router-dom' 
 
   import axios from 'axios';
   import { toast } from 'react-toastify'
@@ -102,7 +104,7 @@ import {
               </Stack>
               <Stack pt={6}>
                 <Text align={'center'}>
-                  Already a user? <Link color={'blue.400'}>Login</Link>
+                  Already a user? <Link to={'/sign-in'} style={{color: "blue"}}>Login</Link>
                 </Text>
               </Stack>
             </Stack>

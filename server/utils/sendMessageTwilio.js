@@ -1,16 +1,18 @@
-const accountSid = 'AC14244de6c907b0e77051282233d8bc9c';
-const authToken = '5c5a9da36fa268d5a70516ada2ac1878';
+require('dotenv').config();
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
-const sendMessageWithTwilio = (text,number) => {
+const sendMessageWithTwilio = async({text,number}) => {
 
-    client.messages
-        .create({
-            body: text,
-            to: number
-        })
-        .then(message => console.log(message.sid))
-        .done();
+    await client.messages
+    .create({
+        body: text,  
+        messagingServiceSid: process.env.TWILIO_MESSAGING_SERVICE_SID,      
+        to: number
+    })
+    .then(message => console.log(message.sid))
+    .done();
 
 }
 

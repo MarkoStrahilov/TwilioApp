@@ -82,6 +82,9 @@ export default function SignIn() {
                 <Checkbox>Remember me</Checkbox>
                 <Link color={"blue.400"}>Forgot password?</Link>
               </Stack>
+              <Text align={'center'}>
+                  No account? <Link to={'/sign-up'} style={{color: "blue"}}>Signup</Link>
+                </Text>
               <Button
                 bg={"blue.400"}
                 color={"white"}
