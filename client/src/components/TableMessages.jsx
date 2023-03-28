@@ -9,6 +9,7 @@ import {
     Td,
     TableCaption,
     TableContainer,
+    Badge
   } from '@chakra-ui/react'
 
   const TableMessages = ({messages}) => {
@@ -30,7 +31,7 @@ import {
              {messages.map(message => (
               <Tr key={message._id}>
               <Td>{message._id}</Td>
-              <Td color={'green.600'}>{message.status}</Td>
+              <Td><Badge colorScheme='green'>{message?.status}</Badge></Td>
               {message?.text.length < 30 ? <Td>{message?.text}</Td> : <Td>{message?.text.substring(0,30)} ...</Td>}
               <Td>{message?.toPhoneNumber}</Td>
               <Td>{message?.createdAt}</Td>
